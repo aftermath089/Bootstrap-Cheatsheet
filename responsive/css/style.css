@@ -1,0 +1,228 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 1.5; 
+    padding: 0;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+/*global*/
+.container{
+    width: 80%;
+    margin: auto;
+    overflow: hidden; 
+}
+
+.dark{
+    padding: 15px;
+    background: #35424a;
+    color: floralwhite;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+.button_1{
+    height: 38px;
+    background: #e8491d;
+    color: #f4f4f4;
+    border: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+/*header*/
+header{
+    background: #35424a;
+    color: #f4f4f4;
+    padding-top: 16px;
+    min-height: 6   0px;
+    border-bottom: #e8491d 3px solid;
+}
+
+
+
+header a{
+    color: #f4f4f4;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+header ul :hover, .current a{
+    color: #e8491d;
+    font-weight: bold;
+}
+
+
+header li{
+    display: inline;
+    float: left;
+    padding: 0 20px 0 20px;
+}
+
+
+header .branding{
+    float: left;
+}
+
+header .branding h1{
+    margin: 0;
+}
+header nav{
+    float: right;
+    margin-top: 10px;
+}
+
+header .highlight{
+    color: #e8491d;
+}
+
+/*showcase*/
+#showcase{
+    min-height: 350px;
+    text-align: center;
+    color: #000000;
+    font-weight: bold
+}
+
+#showcase h1{
+    margin-top: 100px;
+    font-size: 55px;
+    margin-bottom: 10px;
+    color: #e8491d
+    
+}
+
+#image-bg{
+    position: absolute;
+    background: #000000 url('https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg?cs=srgb&dl=cheese-delicious-dinner-2232.jpg&fm=jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    min-height: 350px; /*height sama kayak containernya*/ 
+    z-index: -1; /*ini kayak depthnya, karna si teks positif dan fotonya mau kita taro dibelakangnya*/    
+    opacity: .5;
+}
+
+/*newsletter*/
+#newsletter{
+    background: #35424a;
+    color: #f4f4f4;
+   
+}
+
+#newsletter h1{
+    float: left;
+    font-size: 28px;
+}
+
+#newsletter form{
+    float: right;
+    margin-top: 25px;margin-bottom: 25px;
+}
+
+#newsletter input[type="email"]{
+    padding: 4px;
+    height: 25px;
+    width: 250px;
+}
+
+
+/*boxes*/
+#boxes{
+    margin-top: 20px;
+    padding: 2em 1em 1em;
+}
+
+#boxes .box{
+    float: left;
+    width: 30%;
+    padding: 10px;
+    margin: 8px;
+    background: #ffffff;
+    text-align: center;
+}
+#boxes .box img{
+    background: #000000;
+    width: 100px;
+}
+
+/*main article*/
+article#main-article{
+    float: left;
+    width: 65%;
+    margin-top: 10px;
+}
+
+/*sidebar*/
+aside#sidebar{
+    float: right;
+    width: 30%;
+    margin-top: 35px;
+}
+
+h1.p-title{
+    font-size: 24px;
+}
+aside#sidebar .quote input, aside#sidebar .quote textarea{
+    width: 90%;
+    padding: 8px;
+
+}
+
+/*services*/
+ul#services li{
+    list-style: none;
+    padding: 20px;
+    border: #e8491d 1px solid;
+    margin-bottom: 5px;
+    background: #35424a;
+    color: #f4f4f4;
+}
+
+/*footer*/
+
+footer{
+    padding: 20px;
+    margin-top: 20px;
+    color: #f4f4f4;
+    background:#35424a;
+    text-align: center;
+}
+
+
+@media(max-width: 1024px ){
+    header .branding, header nav, header nav li, #newsletter h1, #newsletter form, #boxes .box,
+    aside#sidebar, article#main-article{
+        float: none;
+        text-align: center;
+        width: 100%;
+        margin: 4px;
+        padding: 0;
+    }
+
+    header{
+        padding-bottom: 10px;
+    }
+
+  
+    header .branding h1, #newsletter h1{
+        font-size: 150%;
+    }
+    #showcase h1{
+        margin-top: 40px;
+        font-size: 200%;
+    }
+
+    #newsletter button, #newsletter form input[type="email"], .quote button, .quote input, .quote textarea{
+        width: 95%;
+        align-content: center
+        display: block;
+        margin-bottom: 10px;     
+    }
+}
+

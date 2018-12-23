@@ -1,0 +1,125 @@
+<style>
+
+    @media(min-width:468px){
+        .container-1{
+            display: flex;
+            align-items: flex-end 
+            /*display flex: item jadi horizontal nyusunya, kalo mau jadi vertical pake flex-direction:column*/
+            /*align item: end bawah start atas center tengah, default stretch, yg lebih pendek ngikut yang lebih panjang*/
+       }
+
+        .container-2{
+            display: flex;
+            justify-content:space-around;
+            /*justify content untuk persebaran si item di dalam container (rata kiri, kanan, tengah, dll)*/
+        }
+    }
+
+    .container-3{
+        display: flex;
+        flex-wrap: wrap-reverse;
+        /*kalau layar udah penuh maka item dalam kontainer lanjut dibawahnya, reverse lanjut diatasnya*/
+        justify-content: space-around;
+    }
+   
+    .container-1 div, .container-2 div, .container-3 div{
+        border: 1px #ccc solid;
+        padding: 10px;
+    }
+
+    .box-1{
+        flex: 2;
+        order: 3;
+        /*flex: kayak grid(?)*/
+        /*order: urutan item di container*/
+    }
+
+    .box-2{
+        flex: 1;
+        order: 2;
+    }
+
+    .box-3{
+        flex: 1;
+        order: 1;
+    }
+
+    .container-2-items{
+        /*width: 20%;*/
+        /*width: ngambil berapa persen lebar layar,pake flex-basis: saja */
+        flex-basis: 20%;
+    }
+
+    .container-3-items{
+        flex-basis: 15%;
+    }
+</style>
+
+<div class="container-1">
+    <div class="box-1">
+        <h3>box one</h3>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+    </div>
+    <div class="box-2">
+        <h3>box two</h3>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+    </div>
+    <div class="box-3">
+        <h3>box three</h3>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+    </div>
+</div>
+
+<div class="container-2">
+        <div class="container-2-items">
+            <h3>box one</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-2-items">
+            <h3>box two</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-2-items">
+            <h3>box three</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+</div>
+
+<div class="container-3">
+        <div class="container-3-items">
+            <h3>box one</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-3-items">
+            <h3>box two</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-3-items">
+            <h3>box three</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-3-items">
+            <h3>box one</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-3-items">
+            <h3>box two</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-3-items">
+            <h3>box three</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-3-items">
+            <h3>box one</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-3-items">
+            <h3>box two</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>
+        <div class="container-3-items">
+            <h3>box three</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae illo obcaecati vel amet ex corporis ipsam? Dignissimos, porro sint consectetur consequatur tempora molestiae delectus quam recusandae nihil voluptates ipsum iure.</p>
+        </div>         
+</div>
