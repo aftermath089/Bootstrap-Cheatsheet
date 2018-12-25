@@ -42,7 +42,7 @@ items[1].style.backgroundColor = 'grey';
 //------------------------------------------------
 //GETELEMENTSBYTAGNAME
 var li = document.getElementsByTagName('li'); //ambil semua li dalam page, jika di loop semua li akan ganti sesuai kodingan anda
-li[3].innerHTML = 'item 4 diakses dengan tag';//biasanya dipake misal mau nambahin li pada list, biar style dari li yang baru mengikuti li yang sebelumnya (misal tidak diberi class)
+li[3].innerHTML = 'item 4 diakses dengan tag li[3]';//biasanya dipake misal mau nambahin li pada list, biar style dari li yang baru mengikuti li yang sebelumnya (misal tidak diberi class)
 //------------------------------------------------
 
 //------------------------------------------------
@@ -71,8 +71,44 @@ itemterakhir.style.color = 'blue';
 //var evenItem = document.querySelectorAll('.list-group-item:nth-child(even)');
 // for (var [i] = 0; i < odd.length; i++) {
 //     odd[i].style.backgroundColor = '#000';
-//     even[i].style.backgroundColor = '#fff';
+//     even[i].style.backgroundColor = '#fff'; n
 // }
 //------------------------------------------------
 
+//------------------------------------------------
+//DOM Traversing (access child,parent,sibling)
+var itemList=document.querySelector('#items');
+//parent
+console.log(itemList.parentNode) //access the parent node
+console.log(itemList.parentNode.parentNode.parentNode)
+itemList.parentNode.style.backgroundColor='#f4f4f4'
+//parentNode==parentElement
+//child
+console.log(itemList.childNodes); //nodelist
+console.log(itemList.children); //collection
+//sibling
+console.log(itemList.nextElementSibling);
+//------------------------------------------------
 
+//------------------------------------------------
+//CREATING ELEMENT
+var newDiv = document.createElement('div');
+newDiv.className='add-class';
+newDiv.id='add-id'
+newDiv.setAttribute('title', 'this is a title');
+console.log(newDiv);
+
+var newDivText = document.createTextNode('hello world');
+console.log(newDivText);
+
+newDiv.appendChild(newDivText);
+console.log(newDiv);
+
+newDiv.style.fontSizez='30px';
+
+//inserting the element
+var container = document.querySelector('header .container');
+var h1 = document.querySelector('header h1');
+ 
+container.insertBefore(newDiv,h1);
+//------------------------------------------------
