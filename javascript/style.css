@@ -8,12 +8,36 @@ body{
 
 header{
     background: #e1234e;
-    color: aliceblue;
-    padding-top: 2px;
-    padding-bottom: 4px;
     border-bottom: 4px solid orangered;
+    display: flex;
+}
+ header h1{
+    color: aliceblue;
+     float: left;
+ }
+
+ #header-title{
+     margin-top: 20px;
+     padding: 0;
+ }
+header input{
+    float: right;
+    color: white;
+    background: #f89ab0;
+    outline-color: #e1d423;
+    border: 0px;
+    align-items: center;
+    
 }
 
+header ::-webkit-input-placeholder{
+    color: white;
+}
+
+#filter{
+    margin-top: 24px;
+    width: 20%;
+}
 ul{
     list-style: none;
     padding: 0px;
@@ -75,6 +99,9 @@ label{
     margin: 4px;
     height: 36px;
     padding-left: 20px;
+}
+
+#input-item{
     width: 80%;
 }
 
@@ -86,9 +113,34 @@ label{
     max-width: 720px;
 }
 
-@media(max-width: 720px){
+.x-button{
+    outline-color: #e1234e;
+    float: right;
+    margin-right: 15px;
+    background: red;
+    color: white;
+    border: 0;
+    height: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.x-button:hover{
+    float: right;
+    margin-right: 15px;
+    background: darkred;
+    color: white;
+    border: 0;
+    height: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+@media(max-width: 768px){
     header{
         font-size: 75%;
+        float: none;
+        margin: 0;
+        padding: 0;
     }
 
     form{
@@ -96,11 +148,17 @@ label{
         align-items: center;
     }
 
-    .button, .input, .button:hover{
+    .button, .input, .button:hover, #input-item, #filter{
         width: 100%;
-        margin: 4px;
-        padding: 0;
+        margin-bottom: 4px;
+        padding:0;
+        float: none;
     }
 
+    #filter{
+        margin-top: 0;
+        margin-bottom: 14px;
+        padding-left:4px;
+    }
 
 }
