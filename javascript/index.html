@@ -23,6 +23,11 @@
                 <label for="">Add Items</label>
                 <form action="">
                     <input type="text" placeholder="type item" class="input">
+                    <select name="" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                    </select>
                     <input type="submit" class="button" value="Sumbit!">
                 </form>
                 <label for="">Items</label>
@@ -32,6 +37,16 @@
                     <li class="list-group-item">Item 3</li>
                     <li class="list-group-item">Item 4</li>
                 </ul>
+                <br>
+                <input onclick="buttonClick()" type="button" value="Click here" class="button" id="button-clickhere">
+                <input onclick="buttonClick()" type="button" value="Click here 2" class="button" id="button-clickhere2">
+                <br>
+                <input onclick="buttonClick()" type="button" value="Click here 3" class="button" id="button-clickhere3">
+                <div id="output"></div>
+            </div>
+
+            <div class="card" id="empty-card" style="height:400px">
+                <div id='position'></div>
             </div>
         </div>
         </div>
