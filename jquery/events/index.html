@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Events with jquery</title>
+    <script src="jquery.js"></script>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            line-height: 1.5em;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            color: white;
+            background: orangered;
+            padding: 20px;
+            border-bottom: 4px solid red;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>jquery events</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <h3>mouse events</h3>
+        <button id="button1">button1</button>
+        <button id="button2">button2</button>
+        <button id="button3">button3</button>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ducimus beatae vitae voluptatibus eveniet qui
+            necessitatibus laborum et nobis, dignissimos ipsam blanditiis vero velit totam similique, vel deserunt ad!
+            Sit ipsam, praesentium minus repellat neque porro excepturi est repudiandae tempore ut obcaecati vitae
+            expedita numquam recusandae possimus perferendis provident repellendus, dolor reiciendis odio vel eius
+            iure! Possimus accusamus eius doloremque asperiores corrupti laudantium unde, ut, iusto eos beatae quae
+            vero vel distinctio voluptates blanditiis aut aliquam harum vitae illo pariatur! Ullam delectus
+            exercitationem, quaerat in numquam quo aspernatur saepe unde cumque eveniet recusandae earum maxime atque
+            expedita ea? Esse, distinctio?</p>
+
+        <button id="button4">button4</button>
+        <p id="position"></p>
+
+        <form action="" id="form">
+            <label for="">name</label>
+            <input type="text" id="name" placeholder="input your name">
+            <br>
+            <label for="">email</label>
+            <input type="email" id="email" placeholder="aaaa@bbbb.ccc">
+            <br>
+            <label for="" id="gender">gender</label>
+            <select name="" id="gender">
+                <option value="male">male</option>
+                <option value="female">female</option>
+            </select>
+            <br>
+            <input type="submit" value="submit">
+        </form>
+    </div>
+
+
+
+</body>
+<script>
+    //==BASIC EVENTS==
+    //kalau mau script ditaro di header nanti script2 event dll dimasukin ke function(){....} semua
+    // -->  $(document).ready(function(){
+    //          $('button').click(function () {
+    //              console.log('button clicked');
+    //          })
+    //      })
+
+    //event: click, dblclick, hover(kombinasi mouseenter && mouseleave pada js biasa (beda sama hover pada js biasa)),
+    //       mousemove, mouseup, mousedown, focus
+    $('button').click(function () {
+        console.log('button clicked');
+    })
+    //^^^atas-->> lebih cepat pengetikany
+    //vvvbawah-->> syntax lebih ke javascript biasa
+    $('#button1').on('click', function () {
+        console.log('button1 clicked');
+    })
+
+    $('#button1').click(function () { //saat b1 klik p di hide
+        $('p').hide();
+        console.log('p is now hidden');
+    })
+
+    $('#button2').click(function () { //saat b2 klik p di show
+        $('p').show();
+        console.log('p is now on screen');
+    })
+
+    $('#button3').click(function () {
+        $('p').toggle(); //1 tombol yg ngatur show dan hide
+    })
+
+    //liat event, mirip2 dengan js biasa  
+    $('#button4').click(function(e){ 
+        console.log(e.target.innerHTML);
+        console.log(e.currentTarget.innerHTML);    
+    })
+
+    $(document).on('mousemove',function(e){
+        $('#position').html('x: '+e.clientX+' y: '+e.clientY);
+        //change bg depends on mouse position:
+        //$('body').css('background','#'+e.clientX+e.clientY);
+    })
+
+    //form
+    $('input').focus(function(){
+        console.log('input on focus');
+        $(this).css('background','pink'); //this: name dan email jadi beerubah juga tanpa harus diassign satu persatu
+    })
+
+      $('input').blur(function(){
+        console.log('input out focus');
+        $(this).css('background','white');
+    })
+
+    $('input').keyup(function(e){
+        console.log(e.currentTarget.value);
+    })
+
+    $('select#gender').change(function(e){
+        console.log('changed to '+e.currentTarget.value);
+    })
+
+    $('form').submit(function(e){
+        e.preventDefault(); 
+        
+        let name = $('input#name').val();
+        let email = $('input#email').val();
+        let gender = $('select#gender').val();
+
+        console.log('form submitted! name: '+name+
+        ' \nemail: '+email+
+        ' \ngender: '+ gender);
+    })
+</script>
+
+</html>
