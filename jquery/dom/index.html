@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM jquery</title>
+    <script src="jquery.js"></script>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            line-height: 1.5em;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            color: white;
+            background: orangered;
+            padding: 20px;
+            border-bottom: 4px solid red;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .newClass {
+            color: orchid;
+            background: black;
+        }
+    </style>
+
+    <script>
+        //DOM jquery
+        $(document).ready(function () {
+            //multiple 
+            $('p.para1').css({ color: 'red', background: 'yellow' });
+
+            //add class/remove class
+            $('p.para2').addClass('newClass');
+            $('p.para2').removeClass('newClass');
+
+            //toggle class
+            $('#button1').click(function () {
+                $('p.para2').toggleClass('newClass')
+            })
+
+            //dom-ing
+            $('#div1').text('hello wrold'); //ganti teks
+            $('#div1').html('<strike>hello wrold</strike>'); //semacam innerhtml
+            console.log($('#div1').text());//return teks
+            console.log($('#div1').html())//return innerhtml
+
+            //append, prepend, appendTo, prependTo
+            $('ul').prepend('<li> li add via prepend</li>');
+            $('ul').append('<li> li add via append</li>');
+
+            $('.para2').appendTo('.para1');
+            $('.para2').prependTo('.para1'); //click button biar terlihat bedanya
+
+            //before, after(kalo mau masukin item tidak sebagai child/parent, tetapi sebagai sibling sebelum / sesudah)
+            $('#button1').before('<span>before button</span>');
+            $('#button1').after('<span>after button</span>');
+
+            //empty (hapuus semua childnya)
+            //$('ul').empty();
+
+            //detach (cabut dari document)
+            //$('ul').detach();
+
+            //attribute
+            $('a').attr('target', '_blank');
+            console.log($('a').attr('href'));
+            $('a').removeAttr('target');
+
+            //wrap
+            //$('p').wrap('<h1>') //wrap seluruh p dalah p dalam h1 masing2nya h1 p /h1 h1 p /h1
+            //$('a').wrapall('<h1>') //seluruh p dalam h1 besar h1 p p /h1
+
+            //add list
+            $('#input').attr('placeholder', 'add your item here');
+            $('#input').keyup(function (e) {
+                let code = e.which;
+                if (code == 13) { //enter==13
+                    e.preventDefault();
+                    $('ul').append('<li>' + e.target.value + '</li>');
+                }
+            })
+
+            //array to list
+            var array = ['a', 'b', 'c', 'd'];
+            $.each(array, function (index, value) {
+                console.log(value);
+                $('#users').append('<li>' + value + '</li>');
+            })
+
+            //list to array
+            var arrayfromlist = $('ul#randomlist li').toArray();
+            console.log(arrayfromlist[0].innerHTML);
+
+        })
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>jquery DOM</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <input type="text" id="input">
+        <br>
+        <button id="button1">button 1</button>
+        <p class="para1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, unde?</p>
+        <p class="para2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, nemo.</p>
+        <div id="div1"></div>
+        <h1>random list</h1>
+        <ul id="randomlist">
+            <li>list1</li>
+            <li>list2</li>
+            <li>list3</li>
+            <li>list4</li>
+        </ul>
+        <br>
+        <h1>list of user</h1>
+        <ul id="users"></ul>
+
+        <a href="http://github.com/vincentmichael089">github</a>
+    </div>
+</body>
+
+</html>
