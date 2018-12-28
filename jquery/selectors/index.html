@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Selector with jquery</title>
+    <script src="jquery.js"></script>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            line-height: 1.5em;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            color: white;
+            background: orangered;
+            padding: 20px;
+            border-bottom: 4px solid red;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>jquery selector</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 id="heading1">Heading 1</h1>
+        <p id="para1"><span>Lorem ipsum </span>dolor sit amet consectetur
+            adipisicing elit. Rerum unde obcaecati quibusdam.
+            Cum excepturi placeat illum atque illo quas nisi
+        </p>
+
+        <h1 class="heading2">Heading 2</h1>
+        <p class="para2"><span>Lorem ipsum </span>dolor sit amet consectetur
+            adipisicing elit. Rerum unde obcaecati quibusdam.
+            Cum excepturi placeat illum atque illo quas nisi
+        </p>
+
+        <ul id="list">
+            <li>list item</li>
+            <li>list item</li>
+            <li>list item</li>
+            <li>list item</li>
+            <li>list item</li>
+            <li>list item</li>
+            <li>list item</li>
+        </ul>
+
+        <input type="button" value="button1">
+        <input type="submit" value="submit">
+        <input type="text" name="" id="">
+        <a href="http://github.com/aftermath089">me github</a>
+        <a href="http://github.com/">github</a>
+
+    </div>
+    </div>
+    <script></script>
+
+</body>
+<script>
+    //BASIC SELECTOR
+    //$('h1').hide(); select semua item h1 dan menyembunyikannya
+    //$('h1#heading1').hide(); select lebih presisi ke id si h1
+    //$('h1.heading2').hide(); select lebih presisi ke classnya si h1
+    //atau langsung $('.heading2').hide
+    $('p span').css('color', 'red'); //ubah semua yg kena span pada p menjadi warna merah, jadi span yg diluar p tidak berubah warna 
+
+    $('ul#list li:first').css('color','blue'); //perhatikan syntax!
+    $('ul#list li:last').css('color','green'); //perhatikan syntax!
+    $('ul#list li:odd').css('background-color','white'); //perhatikan syntax!
+    $('ul#list li:even').css('background-color','#cccccc'); //perhatikan syntax!
+    $('ul#list li:nth-child(3n)').css('list-style','none'); //perhatikan syntax!
+
+    $(':button').hide();//hide berdasar typenya, karna button satu lagi pake type button maka ga ke hide
+
+    $('[href]').css('color','orangered');
+    $('a[href="http://github.com/"]').css('color','green'); 
+
+    //select all attributes: $('*')
+</script>
+
+</html>
