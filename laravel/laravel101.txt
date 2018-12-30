@@ -1,0 +1,72 @@
+LARAVEL
+
+@@@@@@@@@@@@@@@@@@@@@
+Routing & Controllers
+@@@@@@@@@@@@@@@@@@@@@
+
+->routes->web.php
+//bisa get post delete
+--
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/hello', function () {
+    return 'hello laravel'; //bisa pass innerhtml juga disini
+});
+--
+//misal pada ->resources->views->pages-> bikin file baru dgn nama about.blade.php, isi "about"
+--
+Route::get('/about',function(){
+    return view ('pages.about'); //bisa juga pages/about
+});
+--
+
+//dynamic routing
+--
+Route::get('/users/{id}/{name}',function($id, $name){
+    return 'user id is  '.$id.' and the name is '.$name;
+}); //run di http://localhost/lsapp/public/users/id/name
+--
+/*basic idea:
+route->controller->return the view.
+buat controller dengan langkah mengetik pada terminal:
+--
+    php artisan make:controller PagesController
+--
+dan cek filenya pada app->Http->Controllers.
+
+misal kita buka file yg tadi dan tambahkan method pada class sehingga file PagesController.php sbb
+--
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PagesController extends Controller
+{
+    //
+    public function index(){
+        return view('pages.index');
+    }
+
+  public function about(){
+        return view('pages.about');
+    }
+}
+--
+//nanti si controller yang harus mengembalikan view, maka return viewnya disana.
+buat file baru di resources.views.pages dengan nama index.blade.php (view yg di return fungsi diatas)
+buat route sbb
+--
+Route::get('/pages-controllers','PagesController@index');
+Route::get('/about','PagesController@about');
+--
+
+dan akses melalui 
+http://localhost/lsapp/public/pages-controllers -->index page 
+http://localhost/lsapp/public/about		-->about page
+
+
+	
