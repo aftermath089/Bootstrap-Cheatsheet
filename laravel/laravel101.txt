@@ -68,5 +68,60 @@ dan akses melalui
 http://localhost/lsapp/public/pages-controllers -->index page 
 http://localhost/lsapp/public/about		-->about page
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Templating & Compiling Assets
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//Membuat layout:
+-bikin folder dengan nama 'layouts'di view, buat file layout contoh: 'app.blade.php'
+-misal pada app hanya body yang berubah, maka bodynya kita hapus dan ganti dengan '@yield('content')
+jadinya kayak gini: 
+<body>
+	@yield('content')
+</body>
+-lanjut, pindah ke file page misal index.blade.php dan ubah menjadi seperti ini:
+@extends('layouts.app') -->extend ke layout yg kita bikin pada folder 'layouts'dengan nama file 'app'
+@section('content')
+<H1>Hello Wrold</H1>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, ut.</p>
+@endsection
+
+//Passing Value pada Blade Template: {{$blablabla}}
+-bermain di page controllers
+-contoh:
+
+    public function about(){
+        $data = array(
+            'title'=>'about',
+            'abouts'=>['WebDev','Prog','SEO']
+        );
+
+        return view('pages.about')->with($data);
+    }
+-pada about.blade.php:
+
+	@extends('layouts.app')
+	@section('content')
+	<H1>{{$title}}</H1>
+    	    @if (count($abouts)>0)
+      	      <ul>
+        	  @foreach ($abouts as $about)
+                	<li>{{$about}}</li>
+          	  @endforeach
+              </ul>
+            @endif
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, ut.</p>
+@endsection
+
+//Assets & CSS
+pada template layout tambahkan file css dengan (letak folder css="public->css")
+bootstrap default laravel:
+<link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+-install npm untuk node module bootstrap
+
+
+
+
 
 	
