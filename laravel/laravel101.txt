@@ -119,6 +119,11 @@ bootstrap default laravel:
 <link rel="stylesheet" href="{{asset('css/app.css')}}">
 
 -install npm untuk node module bootstrap
+-ganti2 warna pada resources-> assets-> sass -> _variables.scss (harus compile ulang)
+solusi: npm run watch untuk autocompile ketika ada yg berubah
+-custom stylesheet buat file dgn misal nama _custom.scss pada resources-> assets-> sass
+-include custom stylesheet pada app.scss setelah Bootstrap (@import "custom";) (tanpa underscore karna underscore=include)
+
 
 
 
