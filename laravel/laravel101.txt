@@ -3,6 +3,7 @@ LARAVEL
 @@@@@@@@@@@@@@@@@@@@@
 Routing & Controllers
 @@@@@@@@@@@@@@@@@@@@@
+cek list route: php artisan route:list
 
 ->routes->web.php
 //bisa get post delete
@@ -124,8 +125,56 @@ solusi: npm run watch untuk autocompile ketika ada yg berubah
 -custom stylesheet buat file dgn misal nama _custom.scss pada resources-> assets-> sass
 -include custom stylesheet pada app.scss setelah Bootstrap (@import "custom";) (tanpa underscore karna underscore=include)
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Models & Database Migration
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-buat controller dengan mengetik pada terminal: php artisan make:controller PostController --resource
+(*bakal dibikin di app->http->controllers)
+-buat model dengan mengetik pada terminal: php artisan make:model modelPost -m
+(*bakal muncul di app->http). dengan perintah -m akan dibuat migration pada folder database->migrations->nama model+table
+-buka file migrationnya dan untuk menambah item yg akan ditambah ke database tambahkan pada fungsi up:
+  public function up()
+    {
+        Schema::create('model_posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+	    //tambahan
+	    $table->string('title');
+	    $table->mediumText('body');
+        });
+    }
+-daftarkan database kita pada .env (DB_DATABASE=namadatabase, DB_USERNAME, DB_PASSWORD)
+-kalo ada issue kepanjangan input database cek di app->providers-> AppServiceProviders.php; tambahkan  
+	use Illuminate\Support\Facades\Schema;
+ dan pada boot tambahkan
+	Schema::defaultStringLength(191);
+-migrate database ke mysql servel (phpmyadmin kalo pake xampp) dengan command: php artisan migrate
+
+//Tinker
+-akses database dari terminal dengan Tinker: php artisan tinker
+contoh command lain: >>> App\modelPost::count() ->return number of post
+-tambah data dengan tinker
+PER DATA ketik:
+>>> $post = new App\modelPost();
+>>> $post->title='Title via Tinker';
+>>> $post->body='body via tinker';
+>>> $post->save();
+
+keluar dari tinker: >>>quit
 
 
+fungsi yg perlu ditambah pada PostController:
+1.index: list dari seluruh post
+2.create: representasi form
+3.store: fungsi untuk submit model ke database
+4.edit: edit form
+5.update: update
+6.destroy: delete
+7.show: show single post
+
+fungsi2 tersebut harus diroutekan, buka routes->web.php dan tambahkan route:
+	Route::resource('posts','PostController');
+(langsung menambahkan route untuk seluruh fungsi pada PostController)
 
 
 
