@@ -209,6 +209,7 @@ pada PostController.php gunakan use App\modelPost; (biar class modelnya bisa dip
     {
 	  $posts = modelPost::all(); //ini fungsi transfer seluruh data dari model modelPost dalam json
 	//modelPost::orderBy('title','asc')->get(); data terurut 
+	//modelPost::orderBy('title','asc')->take(5)->get(); data terurut, show 5 data saja
         //modelPost::where('title','Title via Tinker')->get(); data spesifik
         return view('posts.index')->with('posts',$posts); //load view dan passing data $posts
     }
@@ -229,6 +230,13 @@ pada PostController.php gunakan use App\modelPost; (biar class modelnya bisa dip
         @endif
     </div>
 @endsection
+
+-gimana kalo mau pake page? pada fungsi index jadikan seperti ini:
+
+        $posts = moodelPost::orderBy('title','asc')->paginate(jumlahperpage) 
+ 	return view('posts.index')->with('posts',$posts);
+ dan pada layout tambahkan '{{$posts->links()}}' dibawah @endforeach. otomatis nambah link  page 1,2,dst
+
 
 //fungsi show: kalo di android ini yg memegang per-satuan dari recyclelist
 -pada "cardviewnya" di index.blade.php milik post kita bikin seperti ini:
@@ -258,3 +266,15 @@ pada PostController.php gunakan use App\modelPost; (biar class modelnya bisa dip
     <p>{{$post->body}}</p>
     </div>
 @endsection
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Fetching data with NON-Eloquent
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+fetch data dengan SQL query, pastikan 'use DB;' pada PostController
+ public function index()
+    {
+        /*dengan SQL queries:
+            $posts = DB::select('SELECT * FROM posts');
+        */
+	 return view('posts.index')->with('posts',$posts); //load view  
+    }
