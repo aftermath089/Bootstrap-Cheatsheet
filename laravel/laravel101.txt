@@ -128,6 +128,27 @@ solusi: npm run watch untuk autocompile ketika ada yg berubah
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 Models & Database Migration
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//model
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class modelPost extends Model
+{
+    //Table Name
+    protected $table ='model_posts';
+
+    //Primary Key
+    public $primaryKey = 'id';
+
+    //Timestamps
+    public $timestamps = true;
+}
+	
+
+//database
 -buat controller dengan mengetik pada terminal: php artisan make:controller PostController --resource
 (*bakal dibikin di app->http->controllers)
 -buat model dengan mengetik pada terminal: php artisan make:model modelPost -m
@@ -176,6 +197,64 @@ fungsi2 tersebut harus diroutekan, buka routes->web.php dan tambahkan route:
 	Route::resource('posts','PostController');
 (langsung menambahkan route untuk seluruh fungsi pada PostController)
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Fetching data with Eloquent
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+lanjutan sebelumnya:
+pada PostController.php gunakan use App\modelPost; (biar class modelnya bisa dipake)
 
-	
+//fungsi index
+    public function index()
+    {
+	  $posts = modelPost::all(); //ini fungsi transfer seluruh data dari model modelPost dalam json
+	//modelPost::orderBy('title','asc')->get(); data terurut 
+        //modelPost::where('title','Title via Tinker')->get(); data spesifik
+        return view('posts.index')->with('posts',$posts); //load view dan passing data $posts
+    }
+-lanjut bikin folder posts dengan file nama index.blade.php pada views (resources->views->posts->index.blade.php) ini file untuk interface route /posts
+-pada file blade untuk tampilin data:
+@extends('layouts.app')
+@section('content')
+    <div class="container">
+        <h1> posts </h1>
+        @if(count($posts)>0)
+            @foreach($posts as $post)
+                <div class="well">
+                    <h3>{{$post->title}}</h3>
+                </div>
+            @endforeach
+        @else
+            <p>no post found!</p>
+        @endif
+    </div>
+@endsection
+
+//fungsi show: kalo di android ini yg memegang per-satuan dari recyclelist
+-pada "cardviewnya" di index.blade.php milik post kita bikin seperti ini:
+	<h3><a href="/lsapp/public/posts/{{$post->id}}">{{$post->title}}</a></h3>
+ sehingga akan mengalihkan ke /posts/{{$post->id}} ketika dipencet
+-cek apakah benar return valuenya pada PostController fungsi show
+    public function show($id)
+    {
+        //
+        return modelPost::find($id);
+    }
+-pass data ke viewnya dengan 
+    public function show($id)
+    {
+        //
+       // return modelPost::find($id); //cek data ke id
+       $post = modelPost::find($id);
+       return view('posts.show')->with('post',$post);
+    }
+-pada show.blade.php:
+@extends('layouts.app')
+
+@section('content')
+    <a href="/lsapp/public/posts" class="btn">back to posts</a>
+    <div class="container">
+    <h1>{{$post->title}}</h1>
+    <p>{{$post->body}}</p>
+    </div>
+@endsection
