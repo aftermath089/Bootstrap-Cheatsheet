@@ -399,6 +399,94 @@ Or if you want to initiate by jQuery selector :
     </script>
 -lanjut, textarea formnya kasihin id: 'id'=>'article-ckeditor'
 
+@@@@@@@@@@@@@@@@@@@@@
+Edit and Delete Data
+@@@@@@@@@@@@@@@@@@@@@
+Edit dan delete button ada di post saat diklik post per satuannya
+//edit data dengan edit function
+-pada PostController di fungsi edit:
+   public function edit($id)
+    {
+        //
+        $post = modelPost::find($id);
+        return view('posts.edit')->with('post',$post);
+    }
+
+-kemudian bikin file edit.blade.php pada resource->views->posts, 
+@extends('layouts.app')
+@section('content')
+    <h1>Edit Post</h1>  <!--ini berubah-->
+    {!! Form::open(['action' => ['PostController@update', $post->id],'method' => 'POST']) !!} <!--ini berubah-->
+        <div class="form-group">
+            {{Form::label('title','Title')}}
+            {{Form::text('title',$post->title,['class' => 'form-control', 'placeholder' => 'Title'])}}
+        </div>
+        <div class="form-group">
+                {{Form::label('body','Body')}}
+                {{Form::textarea('body',$post->body,['id' => 'article-ckeditor','class' => 'form-control', 'placeholder' => 'Body'])}}
+        </div>
+        {{form::hidden('_method','PUT')}} <!--ini line tambahan. seharusnya harus lewat PUT namun dengan cara ini bisa dengan method POST-->
+        {{Form::submit('Submit',['class' => 'btn btn-primary' ])}}
+    {!! Form::close() !!}
+
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'article-ckeditor' );
+    </script>
+@endsection
+
+-lanjut, pada PostController update function:
+isi dari function update bakal sama dengan function store, namun bedanya hanya pada $post=modelPost::position($id);
+  
+ public function update(Request $request, $id)
+    {
+        //
+         //validasi.
+         $this->validate($request, [
+            'title' => 'required', //misal tidak diisi nanti errornya dihandle include layout messages.
+            'body' => 'required'
+        ]);
+
+        //create post dengan eloquent
+        $post =  modelPost::find($id);
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+
+        //redirect ketika data tervalidasi dan telah dipost ke database
+        return redirect('/posts')->with('success','post updated!');
+    }
+
+//delete data
+-pada show.blade.php, kita bikin tombol + spoofing delete requestnya
+
+@extends('layouts.app')
+
+@section('content')
+    <a href="/lsapp/public/posts" class="btn">back to posts</a>
+    <div class="container">
+    <h1>{{$post->title}}</h1>
+    <p>{{$post->body}}</p>
+    <hr>
+    <a href="/lsapp/public/posts/{{$post->id}}/edit" class="btn btn-primary">Edit Post</a>
+    </div>
+
+    <!--delete request dibawah ini-->
+    {!!Form::open(['action' => ['PostController@destroy',$post->id], 'method'=>'POST'])!!}
+        {{Form::hidden('_method','DELETE')}}
+        {{Form::submit('Delete',['class'=>'btn btn-danger'])}}
+    {!!Form::close()!!}
+@endsection
+
+-kemudian pada PostController kita ubah fungsi destroy menjadi seperti berikut:
+  public function destroy($id)
+    {
+        //
+        $post = modelPost::find($id);
+        $post->delete();
+        return redirect('/posts')->with('success','post removed');
+    }
+
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 catatan:
