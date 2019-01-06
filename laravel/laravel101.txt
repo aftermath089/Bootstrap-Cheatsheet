@@ -488,6 +488,55 @@ isi dari function update bakal sama dengan function store, namun bedanya hanya p
     }
 
 
+@@@@@@@@@@@@@@@@@@@@@
+User Authentification
+@@@@@@@@@@@@@@@@@@@@@
+ 	php artisan make:auth, terus yes
+-nanti bakal dibikinin layout app baru, jadi sebaiknya kalo mau ada login dll pertama saja biar langsung di templating.
+-pindahin button create post ke home.blade.php, kemudian kita command 
+ 	php artisan make:migration add_user_id_to_posts
+ yang nantinya akan digunakan untuk menambah user-id pada post yang dibuat user tertentu.
+
+fungsi up pada file migration add_user_id_to_posts:
+ public function up()
+    {
+        Schema::table('posts', function ($table) {
+            //
+            $table->integer('user_id');
+        });
+    }
+
+fungsi down pada file migration add_user_id_to_posts:
+ public function down()
+    {
+        Schema::table('posts', function ($table) {
+            //
+            $table->dropColumn('user_id');
+        });
+    }
+
+-migrasikan: php artisan migrate
+-fungsi store pada postcontroller kita tambahi user_id, jadinya gini:
+ public function store(Request $request)
+    {
+        //validasi.
+        $this->validate($request, [
+            'title' => 'required', //misal tidak diisi nanti errornya dihandle include layout messages.
+            'body' => 'required'
+        ]);
+
+        //create post dengan eloquent
+        $post = new modelPost;
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id; //ambil user_id dari user yg sedang aktif
+        $post->save();
+
+        //redirect ketika data tervalidasi dan telah dipost ke database
+        return redirect('/posts')->with('success','post created!');
+    }
+
+
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 catatan:
 {!!$variable!!} : digunakan biar si $variabel bisa diparse jika mengandung unsur html (misal bold dll), karena dengan {{$variable}} tag htmlnya ga diparse.
