@@ -536,6 +536,54 @@ fungsi down pada file migration add_user_id_to_posts:
         return redirect('/posts')->with('success','post created!');
     }
 
+@@@@@@@@@@@@@@@@@@@
+Model Relationship
+@@@@@@@@@@@@@@@@@@@
+-pada modelPost.php tambahkan fungsi berikut:
+ public function user(){
+        return $this->belongsTo('App\User');
+    }
+-pada User.php tambahkan fungsi berikut:
+   public function posts(){
+        return $this->hasMany('App\modelPost');
+    }
+dengan 2 fungsi diatas kita bisa akses berupa:
+	{{$post->user->name}} dll
+
+-pada homeController:
+use App\modelPost;
+use App\User;
+public function index()
+    {
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        return view('home')->with('posts',$user->posts);
+    }
+
+-pada home.blade.php
+ <h3>Your Blog Post</h3>
+ <table class="table table-striped">
+     <tr>
+         <th>Title</th>
+         <th></th>
+         <th></th>
+         <th></th>
+     </tr>
+     @foreach ($posts as $post)
+     <tr>
+        <td>{{$post->title}}</td>
+        <td>{{$post->user->name}}</td>
+        <td><a href="/lsapp/public/posts/{{$post->id}}/edit" class="btn btn-primary">Edit Post</a></td>
+        <td>
+        <!--delete request dibawah ini-->
+    	   {!!Form::open(['action' => ['PostController@destroy',$post->id], 'method'=>'POST'])!!}
+    	   {{Form::hidden('_method','DELETE')}}
+   	   {{Form::submit('Delete',['class'=>'btn btn-danger'])}}
+	   {!!Form::close()!!}
+         </td>
+     </tr>
+     @endforeach
+ </table>
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 catatan:
