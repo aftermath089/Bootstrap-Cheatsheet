@@ -585,6 +585,42 @@ public function index()
      @endforeach
  </table>
 
+@@@@@@@@@@@@@@@
+Access Control
+@@@@@@@@@@@@@@@
+//agar beberapa route tidak bisa diakses(misal ketika tidak login maka tidak bisa create edit delete post)
+
+-pada postcontroller kita buat constructor:
+  public function __construct(){
+        $this->middleware('auth',['except' => ['index','show']]); //view yg di except
+    }
+
+//agar route lain tidak bisa diakses secara ngetik di url bar, pada postcontroller fungsi edit dan delete:
+public function edit($id)
+    {
+        //
+        $post = modelPost::find($id);
+        //check if user is permitted to edit
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('posts')->with('error','not authorized');
+        }
+
+        return view('posts.edit')->with('post',$post);
+    }
+
+//agar menyembunyikan button dari guest / button hanya pada post milik org tertentu maka digunakan templating blade sbb:
+   @if(!Auth::guest()) <!--//guest tidak bisa melihat button-->
+    @if(!Auth::user()->id == $post->user_id) <!--user cuma bisa liat button di post miliknya-->
+    <a href="/lsapp/public/posts/{{$post->id}}/edit" class="btn btn-primary">Edit Post</a>
+    </div>
+
+    <!--delete request dibawah ini-->
+    {!!Form::open(['action' => ['PostController@destroy',$post->id], 'method'=>'POST'])!!}
+        {{Form::hidden('_method','DELETE')}}
+        {{Form::submit('Delete',['class'=>'btn btn-danger'])}}
+    {!!Form::close()!!}
+    @endif
+    @endif
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 catatan:
 {!!$variable!!} : digunakan biar si $variabel bisa diparse jika mengandung unsur html (misal bold dll), karena dengan {{$variable}} tag htmlnya ga diparse.
