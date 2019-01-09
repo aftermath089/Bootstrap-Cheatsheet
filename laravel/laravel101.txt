@@ -833,6 +833,33 @@ public function destroy($id)
         $post->delete();
         return redirect('/posts')->with('success','post removed');
     }
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Deploy Laravel in Shared Hosting
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-create database name, user, password.
+-phpmyadmin xampp table kita harus diexport, klik export->go, namai sesuai nama database yg dibikin.sql
+-phpmyadmin cpanel pada database baru, import->choose file yg tadi diexport
+
+-bawa file ke remote server (pake filezilla client)
+-host: nama web, username: username, password: password (kalo gabisa login bikin FTP accounts di cpanel)
+-file nanti bukan di folder public, tapi bikin folder baru. (misal: lsapp).
+-yang masuk ke public.html: file local lsapp/public, selainya ke folder baru tadi.
+
+-kita arahkan biar web tau dimana file kita tadi:
+-pada public.html edit index.php filenya:
+ require __DIR__.'/../lsapp/bootstrap/autoload.php';
+ $app = require_once __DIR__.'/../lsapp/bootstrap/app.php';
+-save dan upload.
+
+-set database agar benar ke database pada web bukan local lagi
+-edit file .env, DB_DATABASE=nama db web, DB_USERNAME=uname db web, DB_PASSWORD= pass db web, dan upload kembali ke webnya.
+
+-sekarang handle symlink / handling upload foto:
+-buat file php symlinkcreate.php
+<?php
+symlink('/home/(cpanelaccname)/lsapp/storage/app/public','/home/cpanelaccname)/public_html/storage');
+
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 catatan:
 {!!$variable!!} : digunakan biar si $variabel bisa diparse jika mengandung unsur html (misal bold dll), karena dengan {{$variable}} tag htmlnya ga diparse.
