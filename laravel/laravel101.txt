@@ -1,5 +1,29 @@
 LARAVEL
+@@@@@@@@@@@@@@@@@@@@@
+Setup & Environment
+@@@@@@@@@@@@@@@@@@@@@
+-pastikan ada XAMPP dan aktfkan apache dan sql
+-pastikan ada Composer (kayak npm untuk laravel)
+-command: cd xampp/htdocs, lalu composer create-project laravel/laravel (nama app)
+-command: cd (nama app)
+-akses manual struktur di localhost/lsapp, untuk frontendnya di localhost/(nama app)/public
 
+buat virtual host:
+- buka folder: c->xampp->apache->conf->extra
+- buka sebagai admin file 'httpd-vhosts.conf'
+- tambahkan dua entry berikut:
+	<VirtualHost *:80>
+		DocumentRoot "C:/ .....  /xampp/htdocs"
+		ServerName localhost
+ 	</VirtualHost>
+ 	<VirtualHost *:80>
+		DocumentRoot "C:/ .....  /(nama app)/public"
+		ServerName (nama app).dev
+ 	</VirtualHost>
+- kemudian buka file (secara administrator) c:->windows->system32->drivers->etc, buka file hosts dan tambahkan:
+	127.0.0.1 localhost
+	127.0.0.1 (nama app).dev
+- restart apache, akses webnya di browser dengan url: (nama app).dev
 @@@@@@@@@@@@@@@@@@@@@
 Routing & Controllers
 @@@@@@@@@@@@@@@@@@@@@
@@ -859,6 +883,9 @@ Deploy Laravel in Shared Hosting
 -buat file php symlinkcreate.php
 <?php
 symlink('/home/(cpanelaccname)/lsapp/storage/app/public','/home/cpanelaccname)/public_html/storage');
+-upload ke public_html biar bisa di run via browser
+-pada urlbar: namaweb.com/symlinkcreate.php -> enter
+-kalo udah jalan hapus file symlinkcreatenya
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 catatan:
