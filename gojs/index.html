@@ -72,6 +72,21 @@
 
 
         /*=====catatan=====
+            GoJS Class Hierarchy:
+            GraphObject
+                |-Panel
+                |   |-Part
+                |       |-Group
+                |       |-Adornment
+                |       |-Node
+                |       |-Link
+                |
+                |-Shape
+                |-Picture
+                |-Placeholder
+                |-Shape
+                
+
             1.Add and Remove node data:
                 -Model.addNodeData(<node data object>)
                 -Model.removeNodeData(<node data object>)
@@ -108,6 +123,10 @@
                     <button onclick=save()>save</button>   
                     <button onclick=load()>load</button>   
             
+            5.DataBinding Conversion Function
+                        new go.binding("fill","color", function(c){
+                            if(c == 0) return "red";
+                        })
         =================*/
     </script>
 </head>
