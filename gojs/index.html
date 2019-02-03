@@ -11,6 +11,7 @@
     <script>
         //fungsi inisiasi GoJS
         function init(){
+            //graphobject: panel, shape, picture, placeholder
             var $ = go.GraphObject.make;
             myDiagram = $(go.Diagram, "myDiagramDiv");
             
@@ -31,15 +32,22 @@
                 { to: "zeta", from: "alpha", color: "blue"}
             ];
 
-            //set model diagram
+            //set model diagram (default, graphlinkmodel, dan treemodel)
             myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
 
             //buat template node, 
-            myDiagram.nodeTemplate = $(go.Node, "Auto",
-                $(go.Shape, "RoundedRectangle", {fill:"white"},
+            myDiagram.nodeTemplate = $(go.Node, "Auto", //auto bisa diganti vertical / horizontal 
+                {desiredSize: new go.Size(240,180)}, //buat ukuran tempatnya
+                $(go.Shape, "RoundedRectangle", {fill:"white",},
                     new go.Binding("fill","color")//perhatikan binding dengan nodedataarray
                 ),
-                $(go.TextBlock, "text", {margin: 10},
+                $(go.TextBlock, "text", {
+                        margin: 10,
+                        background: "lightgray",
+                        alignment: go.Spot.Right,
+                        stretch: go.GraphObject.Fill,
+                        textAlign: "right"
+                    },
                     new  go.Binding("text","key")//perhatikan binding dengan nodedataarray
                 )
             );
@@ -53,6 +61,9 @@
                     $(go.Shape, {toArrow: "Standard", stroke: null}, //arrowhead
                         new go.Binding("fill", "color"))//perhatikan binding dengan linkdataarray
                 );
+            
+            //layouting (grid, circular, dll)
+            //myDiagram.layout = $(go.CircularLayout);
 
         }
     </script>
