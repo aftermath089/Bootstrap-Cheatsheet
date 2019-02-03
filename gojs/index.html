@@ -152,7 +152,19 @@
                             if(c == 0) return "red";
                             //nanti color daripada pake hex bisa diganti dengan 0 untuk merah, etc
                         })
-        =================*/
+
+            6.Debugging help (console window)
+                1.  myDiagram.nodes.count -> return number of nodes
+                2.  myDiagram.layout.toString() -> diagram coresponding with
+                3.  myDiagram.layout = new.GridLayout() -> set diagram ke bentuk grid
+                    myDiagram.layout.wrappingColumn = 2
+                4.  myDiagram.layoutDiagram(true) -> validate layout, forcing to result
+                5.  myNode = myDiagram.selection.first() -> highlight node yg di klik dan simpan di var myNode
+                6.  myNode.data -> return isi dari data
+                7.  myNode.data.color = "red" -> ganti properti, harus divalidate dengan updateTargetBindings
+                    myNode.updateTargetBindings()
+                8. myDiagram.model.set(myNode.data,"color","red") -> sama dengan poin 7.
+                =================*/
     </script>
 </head>
 
