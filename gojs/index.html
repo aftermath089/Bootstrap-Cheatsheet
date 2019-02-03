@@ -33,6 +33,9 @@
             ];
 
             //set model diagram (default, graphlinkmodel, dan treemodel)
+            //default tanpa link
+            //graphlink dengan link
+            //treemodel bentuk tree (ada atribut parent pada nodeDataArray, tidak lagi pake linkDataArray), biar bentuknya kayak tree nanti pakai TreeLayout
             myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
 
             //buat template node, 
@@ -66,6 +69,46 @@
             //myDiagram.layout = $(go.CircularLayout);
 
         }
+
+
+        /*=====catatan=====
+            1.Add and Remove node data:
+                -Model.addNodeData(<node data object>)
+                -Model.removeNodeData(<node data object>)
+            lebih baik dari mengubah nodeDataArray karna goJS ga di notify ketika terjadi perubahan pada array.
+            contoh:
+                    var data = { key: "zeta", color: "blue"};
+                    myDiagram.model.addNodeData(data);
+
+            2.Cari unique key value:
+                -Model.findNodeDataForKey(<key>)
+
+            3.Modify node
+                -Model.set(<data object>,<target properties>,<property's value>)
+            contoh:
+                    var dataObj = myDiagram.model.findNodeDataForKey("zeta");
+                    myDiagram.model.set(dataObj,"color","red");
+
+            4.Saving/Loading
+                -get model JSON : Model.toJson()
+                -load model from JSON : Model.fromJson(<valid JSON model>)
+            contoh:
+                script  : 
+                    pada init   : 
+                        file = myDiagram.model.toJson();
+                    diluar init : 
+                        function save(){
+                            file = myDiagram.model.toJson()
+                        }
+
+                        function load(){
+                            myDiagram.model = go.Model.fromJson(file);
+                        }
+                html    : 
+                    <button onclick=save()>save</button>   
+                    <button onclick=load()>load</button>   
+            
+        =================*/
     </script>
 </head>
 
