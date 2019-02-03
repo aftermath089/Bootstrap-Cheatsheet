@@ -39,20 +39,44 @@
             myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
 
             //buat template node, 
-            myDiagram.nodeTemplate = $(go.Node, "Auto", //auto bisa diganti vertical / horizontal 
-                {desiredSize: new go.Size(240,180)}, //buat ukuran tempatnya
-                $(go.Shape, "RoundedRectangle", {fill:"white",},
-                    new go.Binding("fill","color")//perhatikan binding dengan nodedataarray
-                ),
+            myDiagram.nodeTemplate = $(go.Node, "Vertical", //auto bisa diganti vertical / horizontal 
+                {
+                    desiredSize: new go.Size(200,200)//buat ukuran tempatnya
+                    //selectable: false true //biar bisa/gabisa di klik
+                    //deletable: false/true ----||----
+                    //resizeable: false/true ----||----
+                    //rotateable: false/true ----||----
+                    //resizeObjectName: "blabla" // ketika di resize, cuma yg punya name "blabla" yg ke resize, yg lainya ngga. (misal pada panel ada properti { name: "blabla"}) 
+                    //rotateObjectName: "blabla" //----||----
+                }, 
                 $(go.TextBlock, "text", {
+                    //dibawah ini namanya GraphObject properties
                         margin: 10,
                         background: "lightgray",
                         alignment: go.Spot.Right,
                         stretch: go.GraphObject.Fill,
                         textAlign: "right"
+                        //text : "blablabla"
+                        //font : "style variant weight size family" ->css properties
+                        //stroke: "warna teks"
+                        //editable : true / false
                     },
                     new  go.Binding("text","key")//perhatikan binding dengan nodedataarray
-                )
+                ),
+                $(go.Panel, "Auto",
+                    $(go.Shape, "RoundedRectangle", {
+                        //dibawah ini namanya GraphObject properties
+                            fill:"white",
+                            //stroke : "warna garis",
+                            //strokeWidth: "ketebalan garis"
+                        },
+                        new go.Binding("fill","color")//perhatikan binding dengan nodedataarray
+                    ),
+                    $(go.Picture, "https://placebear.com/200/300",{
+                        desiredSize: new go.Size(150,100),
+                        //margin: new go.Margin(top, right, left, bottom) 
+                    }),
+                )                               
             );
 
             //buat template link
@@ -126,6 +150,7 @@
             5.DataBinding Conversion Function
                         new go.binding("fill","color", function(c){
                             if(c == 0) return "red";
+                            //nanti color daripada pake hex bisa diganti dengan 0 untuk merah, etc
                         })
         =================*/
     </script>
