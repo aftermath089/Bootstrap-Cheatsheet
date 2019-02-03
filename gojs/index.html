@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Latihan GoJS</title>
+    <!--script GoJS-->
+    <script src="go-debug.js"></script>
+
+    <script>
+        //fungsi inisiasi GoJS
+        function init(){
+            var $ = go.GraphObject.make;
+            myDiagram = $(go.Diagram, "myDiagramDiv");
+            
+            //inisiasi nodeDataArray dan linkDataArray, data binding dilakukan disini
+            var nodeDataArray = [
+                { key : "alpha", color: "lime"},
+                { key : "beta", color: "cyan"},
+
+                //grouping
+                { key: "zeta", isGroup: true},
+                { key: "sigma", color: "yellow", group: "zeta"},
+                { key: "omega", color: "black", group: "zeta"}
+            ];
+            var linkDataArray = [
+                { to: "beta", from: "alpha", color: "red"},
+
+                //link to group
+                { to: "zeta", from: "alpha", color: "blue"}
+            ];
+
+            //set model diagram
+            myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
+
+            //buat template node, 
+            myDiagram.nodeTemplate = $(go.Node, "Auto",
+                $(go.Shape, "RoundedRectangle", {fill:"white"},
+                    new go.Binding("fill","color")//perhatikan binding dengan nodedataarray
+                ),
+                $(go.TextBlock, "text", {margin: 10},
+                    new  go.Binding("text","key")//perhatikan binding dengan nodedataarray
+                )
+            );
+
+            //buat template link
+            myDiagram.linkTemplate = 
+                $(go.Link, 
+                    $(go.Shape, {strokeWidth: 3}, //link
+                        new go.Binding("stroke","color")//perhatikan binding dengan linkdataarray
+                    ),
+                    $(go.Shape, {toArrow: "Standard", stroke: null}, //arrowhead
+                        new go.Binding("fill", "color"))//perhatikan binding dengan linkdataarray
+                );
+
+        }
+    </script>
+</head>
+
+<!--jangan lupa init dijalankan saat onload-->
+<body onload="init()">
+    <!--GoJS diagram selalu berada dalam suatu tag div-->
+    <div id="myDiagramDiv" style="border:1px solid; width:800px; height:800px;"></div>
+</body>
+</html>
