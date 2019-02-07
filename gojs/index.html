@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,26 +11,26 @@
 
     <script>
         //fungsi inisiasi GoJS
-        function init(){
+        function init() {
             //graphobject: panel, shape, picture, placeholder
             var $ = go.GraphObject.make;
             myDiagram = $(go.Diagram, "myDiagramDiv");
-            
+
             //inisiasi nodeDataArray dan linkDataArray, data binding dilakukan disini
             var nodeDataArray = [
-                { key : "alpha", color: "lime"},
-                { key : "beta", color: "cyan"},
+                { key: "alpha", color: "lime" },
+                { key: "beta", color: "cyan" },
 
                 //grouping
-                { key: "zeta", isGroup: true},
-                { key: "sigma", color: "yellow", group: "zeta"},
-                { key: "omega", color: "black", group: "zeta"}
+                { key: "zeta", isGroup: true },
+                { key: "sigma", color: "yellow", group: "zeta" },
+                { key: "omega", color: "black", group: "zeta" }
             ];
             var linkDataArray = [
-                { to: "beta", from: "alpha", color: "red"},
+                { to: "beta", from: "alpha", color: "red" },
 
                 //link to group
-                { to: "zeta", from: "alpha", color: "blue"}
+                { to: "zeta", from: "alpha", color: "blue" }
             ];
 
             //set model diagram (default, graphlinkmodel, dan treemodel)
@@ -39,56 +40,57 @@
             myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
 
             //buat template node, 
-            myDiagram.nodeTemplate = $(go.Node, "Vertical", //auto bisa diganti vertical / horizontal 
+            myDiagram.nodeTemplate = $(go.Node, "Auto", //auto bisa diganti vertical / horizontal 
                 {
-                    desiredSize: new go.Size(200,200)//buat ukuran tempatnya
+                    //desiredSize: new go.Size(200,100)//buat ukuran tempatnya
                     //selectable: false true //biar bisa/gabisa di klik
                     //deletable: false/true ----||----
                     //resizeable: false/true ----||----
                     //rotateable: false/true ----||----
                     //resizeObjectName: "blabla" // ketika di resize, cuma yg punya name "blabla" yg ke resize, yg lainya ngga. (misal pada panel ada properti { name: "blabla"}) 
                     //rotateObjectName: "blabla" //----||----
-                }, 
-                $(go.TextBlock, "text", {
+                },
+                $(go.Shape, "RoundedRectangle", {
                     //dibawah ini namanya GraphObject properties
+                    fill: "white",
+                    //stroke : "warna garis",
+                    //strokeWidth: "ketebalan garis"
+                },
+                    new go.Binding("fill", "color")//perhatikan binding dengan nodedataarray
+                ),
+                $(go.Panel, "Horizontal",
+                    $(go.Picture, "https://placebear.com/200/300", {
+                        desiredSize: new go.Size(50, 50),
+                        margin: 5
+                        //margin: new go.Margin(top, right, left, bottom) 
+                    }),
+                    $(go.TextBlock, "text", {
+                        //dibawah ini namanya GraphObject properties
                         margin: 10,
-                        background: "lightgray",
-                        alignment: go.Spot.Right,
-                        stretch: go.GraphObject.Fill,
-                        textAlign: "right"
+                        background: "transparent",
+                        // alignment: go.Spot.Right,
+                        //stretch: go.GraphObject.Fill,
+                        // textAlign: "right"
                         //text : "blablabla"
                         //font : "style variant weight size family" ->css properties
                         //stroke: "warna teks"
                         //editable : true / false
                     },
-                    new  go.Binding("text","key")//perhatikan binding dengan nodedataarray
-                ),
-                $(go.Panel, "Auto",
-                    $(go.Shape, "RoundedRectangle", {
-                        //dibawah ini namanya GraphObject properties
-                            fill:"white",
-                            //stroke : "warna garis",
-                            //strokeWidth: "ketebalan garis"
-                        },
-                        new go.Binding("fill","color")//perhatikan binding dengan nodedataarray
+                        new go.Binding("text", "key")//perhatikan binding dengan nodedataarray
                     ),
-                    $(go.Picture, "https://placebear.com/200/300",{
-                        desiredSize: new go.Size(150,100),
-                        //margin: new go.Margin(top, right, left, bottom) 
-                    }),
-                )                               
+                )
             );
 
             //buat template link
-            myDiagram.linkTemplate = 
-                $(go.Link, 
-                    $(go.Shape, {strokeWidth: 3}, //link
-                        new go.Binding("stroke","color")//perhatikan binding dengan linkdataarray
+            myDiagram.linkTemplate =
+                $(go.Link,
+                    $(go.Shape, { strokeWidth: 3 }, //link
+                        new go.Binding("stroke", "color")//perhatikan binding dengan linkdataarray
                     ),
-                    $(go.Shape, {toArrow: "Standard", stroke: null}, //arrowhead
+                    $(go.Shape, { toArrow: "Standard", stroke: null }, //arrowhead
                         new go.Binding("fill", "color"))//perhatikan binding dengan linkdataarray
                 );
-            
+
             //layouting (grid, circular, dll)
             //myDiagram.layout = $(go.CircularLayout);
 
@@ -99,7 +101,7 @@
             GoJS Class Hierarchy:
             GraphObject
                 |-Panel
-                |   |-Part
+                |   |-Part 
                 |       |-Group
                 |       |-Adornment
                 |       |-Node
@@ -164,13 +166,31 @@
                 7.  myNode.data.color = "red" -> ganti properti, harus divalidate dengan updateTargetBindings
                     myNode.updateTargetBindings()
                 8. myDiagram.model.set(myNode.data,"color","red") -> sama dengan poin 7.
-                =================*/
+            
+            7.Layouting
+                initialization:
+                        simple  : diagram.layout =  new go.ForceDirectedLayout();
+                        other   : var diagram = $(go.Diagram, "myDiagramDiv",{
+                            initialContentAlignment : go.Spot.Center;
+                            layout: $(go.TreeLayout,{
+                                angle : 90,
+                                nodeSpacing : 10,
+                                layerSpacing : 10
+                            })
+                        });
+            =================*/
     </script>
 </head>
 
 <!--jangan lupa init dijalankan saat onload-->
+
 <body onload="init()">
     <!--GoJS diagram selalu berada dalam suatu tag div-->
     <div id="myDiagramDiv" style="border:1px solid; width:800px; height:800px;"></div>
 </body>
+
 </html>
+
+<script>
+
+</script>
