@@ -1,4 +1,6 @@
 # WebDev-101
-starting webdev wml
+a note about web developing (FE / BE).
 
-learning src:traversymedia
+starting webdev wml :D
+
+learning src:traversymedia, w3schools, etc
