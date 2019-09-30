@@ -47,7 +47,7 @@ function render(data){
             string+= data[i].foods.likes[j]+", ";
         }
     }
-    string += "</p>";
+        
 
     container.insertAdjacentHTML('beforeend', string);
 }
