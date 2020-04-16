@@ -3,7 +3,7 @@ package main
 import(
 	//"fmt"
 	"database/sql"
-	//"github.com/go-sql-driver/mysql"
+	_"github.com/go-sql-driver/mysql"
 )
 
 func main(){
@@ -15,4 +15,14 @@ func main(){
 	if err != nil{
 		panic(err.Error())
 	}
+
+	// inserting row into database
+	insert, err := db.Query("INSERT INTO `posts` (id, title) VALUES('1','My post')")
+
+	if err != nil{
+		panic(err.Error())
+	}
+
+	defer insert.Close()
+
 }
