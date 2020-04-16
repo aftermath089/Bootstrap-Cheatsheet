@@ -44,6 +44,28 @@ func getPosts(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(posts)
   }
 
+func getPost(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	
+	result, err := db.Query("SELECT id, title FROM `posts` WHERE id = ?", params["id"])
+	defer result.Close()
+
+	if err != nil{
+		panic(err.Error())
+	}
+
+	var post Post
+	for result.Next(){
+		err := result.Scan(&post.ID, &post.Title)
+		if err != nil{ // bisa di switch case jika id tidak ada(?)
+			panic(err.Error())
+		}
+	}
+
+	json.NewEncoder(w).Encode(post)
+}
+
 func main(){
 	// open database
 	db, err = sql.Open("mysql", "golang:golang-sql@tcp(127.0.0.1:3306)/golang")
@@ -59,7 +81,7 @@ func main(){
 	// create endpoints
 	router.HandleFunc("/posts", getPosts).Methods("GET")
 	//router.HandleFunc("/posts", createPost).Methods("POST")
-	//router.HandleFunc("/posts/{id}", getPost).Methods("GET")
+	router.HandleFunc("/posts/{id}", getPost).Methods("GET")
 	//router.HandleFunc("/posts/{id}", deletePost).Methods("DELETE")
 	//router.HandleFunc("/posts/{id}",updatePost).Methods("PUT")
 
