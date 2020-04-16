@@ -6,8 +6,8 @@ import(
 	"github.com/gorilla/mux"
 	"net/http"
 	"encoding/json"
-	//"fmt"
-	//"io/ioutil"
+	"fmt"
+	"io/ioutil"
 )
 
 // post model
@@ -66,6 +66,31 @@ func getPost(w http.ResponseWriter, r *http.Request){
 	json.NewEncoder(w).Encode(post)
 }
 
+func createPost(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	
+	query, err := db.Prepare("INSERT INTO `posts`(title) VALUES(?)") //prepare a statement that will execute when Exec() called.
+	if err != nil{
+		panic(err.Error())
+	}
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+	  panic(err.Error())
+	}
+
+	keyVal := make(map [string]string)
+	json.Unmarshal(body, &keyVal)
+	title :=keyVal["title"]
+
+	_, err = query.Exec(title) // execute the query
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Fprintf(w, "New post was created")
+}
+
 func main(){
 	// open database
 	db, err = sql.Open("mysql", "golang:golang-sql@tcp(127.0.0.1:3306)/golang")
@@ -80,7 +105,7 @@ func main(){
 
 	// create endpoints
 	router.HandleFunc("/posts", getPosts).Methods("GET")
-	//router.HandleFunc("/posts", createPost).Methods("POST")
+	router.HandleFunc("/posts", createPost).Methods("POST")
 	router.HandleFunc("/posts/{id}", getPost).Methods("GET")
 	//router.HandleFunc("/posts/{id}", deletePost).Methods("DELETE")
 	//router.HandleFunc("/posts/{id}",updatePost).Methods("PUT")
