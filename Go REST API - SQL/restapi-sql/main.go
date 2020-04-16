@@ -110,6 +110,33 @@ func deletePost(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintf(w, "Post with ID = %s was deleted", params["id"])
 }
 
+func updatePost(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+
+	query, err := db.Prepare("UPDATE `posts` SET title = ? WHERE id = ?")
+	defer query.Close()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	keyVal := make(map [string]string)
+	json.Unmarshal(body, &keyVal)
+	newTitle := keyVal["title"]
+
+	_, err = query.Exec(newTitle, params["id"])
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Fprintf(w, "Post with ID = %s was updated", params["id"])
+}
+
 func main(){
 	// open database
 	db, err = sql.Open("mysql", "golang:golang-sql@tcp(127.0.0.1:3306)/golang")
@@ -127,7 +154,7 @@ func main(){
 	router.HandleFunc("/posts", createPost).Methods("POST")
 	router.HandleFunc("/posts/{id}", getPost).Methods("GET")
 	router.HandleFunc("/posts/{id}", deletePost).Methods("DELETE")
-	//router.HandleFunc("/posts/{id}",updatePost).Methods("PUT")
+	router.HandleFunc("/posts/{id}",updatePost).Methods("PUT")
 
 	http.ListenAndServe(":8000", router)
 }
