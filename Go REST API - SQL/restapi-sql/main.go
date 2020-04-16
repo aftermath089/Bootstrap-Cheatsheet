@@ -70,6 +70,7 @@ func createPost(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/json")
 	
 	query, err := db.Prepare("INSERT INTO `posts`(title) VALUES(?)") //prepare a statement that will execute when Exec() called.
+	defer query.Close()
 	if err != nil{
 		panic(err.Error())
 	}
@@ -91,6 +92,24 @@ func createPost(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintf(w, "New post was created")
 }
 
+func deletePost(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type","application-json")
+	params := mux.Vars(r)
+
+	query, err := db.Prepare("DELETE FROM `posts` WHERE ID = ?")
+	defer query.Close()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	_, err = query.Exec(params["id"])
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Fprintf(w, "Post with ID = %s was deleted", params["id"])
+}
+
 func main(){
 	// open database
 	db, err = sql.Open("mysql", "golang:golang-sql@tcp(127.0.0.1:3306)/golang")
@@ -107,7 +126,7 @@ func main(){
 	router.HandleFunc("/posts", getPosts).Methods("GET")
 	router.HandleFunc("/posts", createPost).Methods("POST")
 	router.HandleFunc("/posts/{id}", getPost).Methods("GET")
-	//router.HandleFunc("/posts/{id}", deletePost).Methods("DELETE")
+	router.HandleFunc("/posts/{id}", deletePost).Methods("DELETE")
 	//router.HandleFunc("/posts/{id}",updatePost).Methods("PUT")
 
 	http.ListenAndServe(":8000", router)
