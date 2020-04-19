@@ -8,17 +8,17 @@ class App extends Component {
       {
         id : '1233',
         title : 'sharpen skills',
-        completed : 'false'
+        completed : false
       },
       {
         id : '245',
         title : 'feed dog',
-        completed : 'false'
+        completed : true
       },
       {
         id : '14567',
         title : 'mow lawn',
-        completed : 'false'
+        completed : false
       }
     ]
   }
