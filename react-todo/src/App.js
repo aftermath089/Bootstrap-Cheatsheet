@@ -13,7 +13,7 @@ class App extends Component {
       {
         id: '245',
         title: 'feed dog',
-        completed: true
+        completed: false
       },
       {
         id: '14567',
@@ -24,8 +24,16 @@ class App extends Component {
   }
 
 
-  markComplete = () => {
-    console.log(`from app.js`)
+  markComplete = (id) => { // id is binded in TodoItem
+    this.setState({
+      todos: this.state.todos.map(todo =>{
+        if(todo.id === id){
+          todo.completed = !todo.completed // toggle
+        }
+
+        return todo
+      })
+    })
   }
   render() {
     return (
