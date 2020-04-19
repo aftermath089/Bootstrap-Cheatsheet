@@ -7,26 +7,18 @@ import uuid from 'uuid/v4';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import About from './components/pages/About';
+import axios from 'axios';
 
 class App extends Component {
   state = {
-    todos: [
-      {
-        id: uuid(),
-        title: 'sharpen skills',
-        completed: false
-      },
-      {
-        id: uuid(),
-        title: 'feed dog',
-        completed: false
-      },
-      {
-        id: uuid(),
-        title: 'mow lawn',
-        completed: false
-      }
-    ]
+    todos: []
+  }
+
+  componentDidMount() {
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+      .then(res => this.setState({
+        todos: res.data
+      }))
   }
 
 
@@ -73,7 +65,7 @@ class App extends Component {
               </React.Fragment>
             )} />
 
-            <Route path="/about" component={About}/>
+            <Route path="/about" component={About} />
           </div>
         </div>
       </Router>
