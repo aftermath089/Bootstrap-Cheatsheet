@@ -21,18 +21,37 @@ router.get('/:id', (req, res) => {
 //create member
 router.post('/', (req, res) => {
     const newUser = {
-        id : uuid.v1(),
+        id: uuid.v1(),
         name: req.body.name,
         age: req.body.age,
-        status : 'active'
+        status: 'active'
     }
-    
-    if(!req.body.name || !req.body.age){
-        return res.status(400).json({msg:'please input needed data'})
+
+    if (!req.body.name || !req.body.age) {
+        return res.status(400).json({ msg: 'please input needed data' })
     }
 
     users.push(newUser)
     res.json(users)
+})
+
+// update member
+router.put('/:id', (req, res) => {
+    const found = users.some(user => user.id === parseInt(req.params.id))
+    if (found) {
+        const updateUser = req.body
+
+        users.forEach(user => {
+            if (user.id === parseInt(req.params.id)) {
+                user.name = updateUser.name ? updateUser.name : user.name
+                user.age = updateUser.age ? updateUser.age : user.age
+
+                res.json({ msg: 'updated!' })
+            }
+        })
+    } else {
+        res.status(400).json({ msg: 'not found! ' })
+    }
 })
 
 module.exports = router
