@@ -7,7 +7,9 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 // init middleware
-app.use(logger)
+app.use(logger) //logger
+app.use(express.json())//bodyparser
+app.use(express.urlencoded({extended:false})) //formsubmission
 
 //static folder routing
 app.use(express.static(path.join(__dirname, 'public')))
