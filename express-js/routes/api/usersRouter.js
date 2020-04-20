@@ -54,4 +54,16 @@ router.put('/:id', (req, res) => {
     }
 })
 
+
+//delete member
+router.delete('/:id', (req, res) => {
+    const found = users.some(user => user.id === parseInt(req.params.id))
+
+    if (found) {
+        res.json(users.filter(user => user.id!== parseInt(req.params.id)))
+    } else {
+        res.status(400).json({msg:'not found!'})
+    }
+})
+
 module.exports = router
