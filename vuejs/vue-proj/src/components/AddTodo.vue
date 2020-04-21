@@ -18,7 +18,8 @@ export default {
         }
     },
     methods:{
-        addTodo(){
+        addTodo(e){
+            e.preventDefault()
             const newTodo = {
                 id : uuid.v4(),
                 title : this.title,
@@ -27,6 +28,7 @@ export default {
 
             // drill up to parent
             this.$emit('add-todo', newTodo)
+            this.title = ''
         }
     }
 
