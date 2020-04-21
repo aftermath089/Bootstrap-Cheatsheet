@@ -10,6 +10,7 @@
 import Todos from "./components/Todos";
 import Header from "./components/layout/Header"
 import AddTodo from "./components/AddTodo"
+import axios from "axios"
 
 export default {
   name: "App",
@@ -30,23 +31,14 @@ export default {
   data() {
     return {
       todos: [
-        {
-          id: 1,
-          title: "todo 1",
-          completed: false
-        },
-        {
-          id: 2,
-          title: "todo 2",
-          completed: false
-        },
-        {
-          id: 3,
-          title: "todo 3",
-          completed: false
-        }
+      
       ]
     };
+  },
+  created(){
+    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10")
+    .then(res => this.todos = res.data)
+    .catch(err => console.log(err))
   }
 };
 </script>
