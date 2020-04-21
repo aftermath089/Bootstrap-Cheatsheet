@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
     }
 
     users.push(newUser)
-    res.json(users)
+    res.redirect('/')
 })
 
 // update member
