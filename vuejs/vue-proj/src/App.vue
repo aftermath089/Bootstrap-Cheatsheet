@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Header/> 
-    <AddTodo v-on:add-todo= "addTodo"/>
+    <Header />
+    <AddTodo v-on:add-todo="addTodo" />
     <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
   </div>
 </template>
 
 <script>
 import Todos from "./components/Todos";
-import Header from "./components/layout/Header"
-import AddTodo from "./components/AddTodo"
-import axios from "axios"
+import Header from "./components/layout/Header";
+import AddTodo from "./components/AddTodo";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -19,30 +19,36 @@ export default {
     Todos,
     AddTodo
   },
-  methods:{
-    deleteTodo(id){
-      this.todos = this.todos.filter(todo => todo.id !== id)
+  methods: {
+    deleteTodo(id) {
+      axios
+        .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        .then(res => this.todos = this.todos.filter(todo => todo.id !== id, res.data))
+        .catch(error => console.log(error))
     },
 
-    addTodo(newData){
-      const {title, completed} = newData
+    addTodo(newData) {
+      const { title, completed } = newData;
 
-      axios.post("https://jsonplaceholder.typicode.com/todos", {title: title, completed:completed})
-      .then(res => this.todos = [...this.todos, res.data])
-      .catch(error => console.log(error))
+      axios
+        .post("https://jsonplaceholder.typicode.com/todos", {
+          title: title,
+          completed: completed
+        })
+        .then(res => (this.todos = [...this.todos, res.data]))
+        .catch(error => console.log(error));
     }
   },
   data() {
     return {
-      todos: [
-      
-      ]
+      todos: []
     };
   },
-  created(){
-    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10")
-    .then(res => this.todos = res.data)
-    .catch(err => console.log(err))
+  created() {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos?_limit=10")
+      .then(res => (this.todos = res.data))
+      .catch(err => console.log(err));
   }
 };
 </script>
@@ -56,7 +62,7 @@ export default {
   color: #2c3e50;
 }
 
-.btn{
+.btn {
   display: inline-block;
   border: none;
   color: white;
@@ -65,7 +71,7 @@ export default {
   cursor: pointer;
 }
 
-.btn:hover{
+.btn:hover {
   background: #2c3e50;
 }
 </style>
