@@ -25,7 +25,11 @@ export default {
     },
 
     addTodo(newData){
-      this.todos = [...this.todos,newData ]
+      const {title, completed} = newData
+
+      axios.post("https://jsonplaceholder.typicode.com/todos", {title: title, completed:completed})
+      .then(res => this.todos = [...this.todos, res.data])
+      .catch(error => console.log(error))
     }
   },
   data() {
