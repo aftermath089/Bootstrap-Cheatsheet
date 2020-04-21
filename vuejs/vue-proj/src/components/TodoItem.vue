@@ -1,5 +1,6 @@
 <template>
-  <div class="todo-item">
+  <div class="todo-item"
+    v-bind:class="{'is-complete': todo.completed}">
       <p>{{todo.title}}</p>
   </div>
 </template>
@@ -19,7 +20,7 @@ export default {
 }
 
 .is-complete {
-  text-decoratiom: line-through;
+  text-decoration: line-through;
 }
 
 .btn-del {
