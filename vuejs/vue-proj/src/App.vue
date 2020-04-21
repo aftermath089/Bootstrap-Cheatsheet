@@ -1,15 +1,18 @@
 <template>
   <div id="app">
+    <Header/> 
     <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
   </div>
 </template>
 
 <script>
 import Todos from "./components/Todos";
+import Header from "./components/layout/Header"
 
 export default {
   name: "App",
   components: {
+    Header,
     Todos
   },
   methods:{
@@ -48,6 +51,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
