@@ -23,12 +23,19 @@ const actions = {
         {title, completed : false})
 
         commit('newTodo', response.data)
+    },
+    
+    async deleteTodo({commit}, id){
+        await Axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+
+        commit('removeTodo', id)
     }
 }
 
 const mutations = {// mutate on commits
     setTodos : (state, response) => (state.todos = response), //response is response.data in actions commit
-    newTodo: (state, todo) => state.todos.unshift(todo)
+    newTodo: (state, todo) => state.todos.unshift(todo),
+    removeTodo : (state, id) => state.todos = state.todos.filter(todo => todo.id !== id)
 }
 
 export default {
