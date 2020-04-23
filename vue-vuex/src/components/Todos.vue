@@ -40,6 +40,7 @@ export default {
         position: relative;
         border-radius: 5px  ;
         padding: 1rem;
+        height: 100px;
     }
 
     .delete-todo{
@@ -51,4 +52,26 @@ export default {
         color: wheat;
         border-radius: 10px;
     }
+    
+    @media(max-width: 500px){
+        .todos{
+            grid-template-columns: 1fr;
+        }
+
+        .todo{
+            height: 100px;
+        }
+    }
+
+    @media(max-width: 720px){
+        .todos{
+            grid-template-columns: 2fr;
+        }
+
+        .todo{
+            height: 100px;
+        }
+    }
+
+
 </style>
