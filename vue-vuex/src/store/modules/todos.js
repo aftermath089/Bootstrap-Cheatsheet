@@ -16,11 +16,17 @@ const actions = {
         console.log(response.data)
 
         commit('setTodos', response.data)
+    },
+
+    async addTodo({commit}, title){
+        const response = await Axios.post("https://jsonplaceholder.typicode.com/posts",{title : title, completed : false})
+        commit('newTodo', response.data)
     }
 }
 
 const mutations = {
-    setTodos : (state, response) => (state.todos = response) //response is response.data in actions commit
+    setTodos : (state, response) => (state.todos = response), //response is response.data in actions commit
+    newTodo : (state, newTodo) => (state.todos.unshift(newTodo))
 }
 
 export default {

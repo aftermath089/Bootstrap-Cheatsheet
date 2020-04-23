@@ -11,8 +11,18 @@
 </template>
 
 <script>
+import { mapActions} from 'vuex'
+
 export default {
-  name: 'AddTodo'
+  name: 'AddTodo',
+  data(){
+    return{
+      title : ''
+    }
+  },
+  methods: {
+    ...mapActions(['addTodo'])
+  }
 }
 </script>
 
