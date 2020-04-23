@@ -24,18 +24,24 @@ const actions = {
 
         commit('newTodo', response.data)
     },
-    
+
     async deleteTodo({commit}, id){
         await Axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
 
         commit('removeTodo', id)
+    },
+
+    async filterTodos({commit}, limit){
+        const response = await Axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`)
+        console.log(limit)
+        commit('setTodos', response.data)
     }
 }
 
 const mutations = {// mutate on commits
     setTodos : (state, response) => (state.todos = response), //response is response.data in actions commit
     newTodo: (state, todo) => state.todos.unshift(todo),
-    removeTodo : (state, id) => state.todos = state.todos.filter(todo => todo.id !== id)
+    removeTodo : (state, id) => state.todos = state.todos.filter(todo => todo.id !== id),
 }
 
 export default {

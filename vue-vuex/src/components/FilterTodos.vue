@@ -1,22 +1,27 @@
 <template>
   <div>
       Filter Todo
-      <select>
+      <select v-on:change="filterTodos($event.target.value)">
           <option value="200">200</option>
-          <option value="200">160</option>
-          <option value="200">80</option>
-          <option value="200">40</option>
-          <option value="200">20</option>
-          <option value="200">10</option>
-          <option value="200">5</option>
+          <option value="160">160</option>
+          <option value="80">80</option>
+          <option value="40">40</option>
+          <option value="20">20</option>
+          <option value="10">10</option>
+          <option value="5">5</option>
 
       </select>
   </div>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
-    name : 'FilterTodos'
+    name : 'FilterTodos',
+    methods : {
+        ...mapActions(['filterTodos'])
+    }
 }
 </script>
 
