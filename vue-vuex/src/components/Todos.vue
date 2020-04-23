@@ -2,7 +2,12 @@
     <div>
         <h3>Todos</h3>
         <div class="todos">
-            <div  class="todo" v-for="todo in allTodos" v-bind:key="todo.id">
+            <div  class="todo" 
+            v-for="todo in allTodos" 
+            v-bind:key="todo.id" 
+            v-on:dblclick="onDoubleClick(todo)"
+            v-bind:class="{'complete-card':todo.completed}"
+            >
                 {{todo.title}}
                 <button class="delete-todo" v-on:click="deleteTodo(todo.id)">Delete</button>
             </div>
@@ -16,7 +21,16 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
     name:"Todos",   
     methods: {
-        ...mapActions(['fetchTodos', 'deleteTodo'])
+        ...mapActions(['fetchTodos', 'deleteTodo', 'updateTodo']),
+        onDoubleClick(todo){
+            const updatedTodo = {
+                id : todo.id,
+                title : todo.title,
+                completed : !todo.completed
+            }
+
+            this.updateTodo(updatedTodo)
+        }
     },
     computed: mapGetters(['allTodos']),
     created(){
@@ -58,7 +72,7 @@ export default {
     }
     
     .incomplete-card{
-        backgroud: orange;
+        background: orange;
     }
     
     @media(max-width: 500px){
