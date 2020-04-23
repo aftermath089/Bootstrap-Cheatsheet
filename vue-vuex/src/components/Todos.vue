@@ -52,6 +52,14 @@ export default {
         color: wheat;
         border-radius: 10px;
     }
+
+    .complete-card{ 
+        background: greenyellow;
+    }
+    
+    .incomplete-card{
+        backgroud: orange;
+    }
     
     @media(max-width: 500px){
         .todos{
