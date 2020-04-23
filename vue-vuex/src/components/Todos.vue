@@ -2,7 +2,7 @@
     <div>
         <h3>Todos</h3>
         <div class="todos">
-            <div class="todo" v-for="todo in allTodos" v-bind:key="todo.id">
+            <div  class="todo" v-for="todo in allTodos" v-bind:key="todo.id">
                 {{todo.title}}
             </div>
         </div>
@@ -19,5 +19,19 @@ export default {
 </script>
 
 <style scoped>
+    .todos{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1rem;
+    }
 
+    .todo{
+        border: 1px solid orangered;
+        cursor: pointer;
+        background: lightgreen;
+        text-align: center;
+        position: relative;
+        border-radius: 5px  ;
+        padding: 1rem;
+    }
 </style>
