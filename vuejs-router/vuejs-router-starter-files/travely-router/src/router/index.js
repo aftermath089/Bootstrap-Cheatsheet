@@ -21,7 +21,7 @@ const routes = [
         path: ":destinationExperienceSlug",
         name: "ExperienceDetails",
         props: true,
-        component: () => import(/* webpackChunkName: "DestinationDetails"*/ "../views/ExperienceDetails.vue")
+        component: () => import(/* webpackChunkName: "DestinationExperienceDetails"*/ "../views/ExperienceDetails.vue")
       }
     ]
   }
