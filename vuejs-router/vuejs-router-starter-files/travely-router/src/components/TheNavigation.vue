@@ -8,7 +8,7 @@
             <router-link v-bind:to="{
                 name: 'DestinationDetails',
                 params :{
-                    slug:destination.slug
+                    destinationSlug:destination.slug
                 }
             }">{{destination.name}}</router-link>
         </li>

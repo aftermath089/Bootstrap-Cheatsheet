@@ -12,7 +12,7 @@ const routes = [
     props: true
   },
   {
-    path: "/details/:slug", //bring the slug in params as url
+    path: "/details/:destinationSlug", //bring the slug in params as url
     name: "DestinationDetails",
     props: true,
     component: () => import(/* webpackChunkName: "DestinationDetails"*/ "../views/DestinationDetails.vue")

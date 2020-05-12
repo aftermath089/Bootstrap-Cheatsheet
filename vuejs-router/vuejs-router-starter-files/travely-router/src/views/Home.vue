@@ -3,11 +3,11 @@
     <h1>All Destination</h1>
     <div class="destination">
       <div v-for="destination in destinations" v-bind:key="destination.id">
-        <router-link v-bind:to="{name: 'DestinationDetails', params:{slug:destination.slug}}">
+        <router-link v-bind:to="{name: 'DestinationDetails', params:{destinationSlug:destination.slug}}">
           <h2>{{destination.name}}</h2>
         </router-link>
         <figure>
-          <router-link v-bind:to="{name: 'DestinationDetails', params:{slug:destination.slug}}">
+          <router-link v-bind:to="{name: 'DestinationDetails', params:{destinationSlug:destination.slug}}">
             <img
               v-bind:src="require(`@/assets/${destination.image}`)"
               v-bind:alt="destination.name"

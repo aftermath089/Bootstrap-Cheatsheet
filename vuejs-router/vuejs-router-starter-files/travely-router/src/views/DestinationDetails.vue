@@ -16,14 +16,15 @@ import store from "@/store.js";
 
 export default {
   data() {
-    return {};
+    return {
+    };
   },
-  props:{
-    destinationSlug:{
-        type: String,
-        required: true
+   props: {
+    destinationSlug: {
+      type: String,
+      required: true
     }
-  },
+  }, 
   computed: {
     computedDestination() {
       return store.destinations.find(
