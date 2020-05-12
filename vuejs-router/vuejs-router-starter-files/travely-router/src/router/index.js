@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import store from "@/store.js"
 
 Vue.use(VueRouter);
 
@@ -23,12 +24,24 @@ const routes = [
         props: true,
         component: () => import(/* webpackChunkName: "DestinationExperienceDetails"*/ "../views/ExperienceDetails.vue")
       }
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      const exists = store.destinations.find(
+        destination => destination.slug === to.params.destinationSlug
+      );
+      if (exists) {
+        next();
+      } else {
+        next({ name: "NotFound" });
+      }
+    }
+
   },
   {// make sure this is always at the end of router array
-    path : "*",
+    path : "/404",
+    alias: "*",
     name : "NotFound",
-    component:  () => import(/* webpackChunkName: "NotFound"*/ "../components/NotFound.vue")
+    component:  () => import(/* webpackChunkName: "NotFound"*/ "../views/NotFound.vue")
   }
 
 ];
