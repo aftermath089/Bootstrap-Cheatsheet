@@ -16,9 +16,13 @@ import store from "@/store.js";
 
 export default {
   data() {
-    return {
-      destinationSlug: this.$route.params.slug
-    };
+    return {};
+  },
+  props:{
+    destinationSlug:{
+        type: String,
+        required: true
+    }
   },
   computed: {
     computedDestination() {
