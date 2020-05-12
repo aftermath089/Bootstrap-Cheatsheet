@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TheNavigation/>
-    <router-view />
+    <router-view v-bind:key="$route.path"/> <!--trigger change-->
   </div>
 </template>
 
