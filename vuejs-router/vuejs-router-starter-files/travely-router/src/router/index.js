@@ -11,7 +11,7 @@ const routes = [
     component: Home
   },
   {
-    path: "/details/:id", //bring the id in params as url
+    path: "/details/:slug", //bring the slug in params as url
     name: "DestinationDetails",
     component: () => import(/* webpackChunkName: "DestinationDetails"*/ "../views/DestinationDetails.vue")
   }
