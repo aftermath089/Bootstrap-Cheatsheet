@@ -1,6 +1,7 @@
 <template>
   <div>
       <h1>{{user}}</h1>
+      <router-link v-bind:to="{name: 'Invoices'}">Invoices</router-link>
       <button class="btn" v-on:click="logOut">logout</button>
   </div>
 </template>

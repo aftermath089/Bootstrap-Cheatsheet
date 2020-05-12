@@ -44,6 +44,11 @@ const routes = [
     meta: {requireAuth:true}
   },
   {
+    path : "/invoices",
+    name : "Invoices",
+    component : () => import(/* webpackChunkName: "Invoices"*/ "../views/Invoices.vue"),
+    meta : {requireAuth : true}
+  },{
     path : "/login",
     name : "Login",
     component : () => import(/* webpackChunkName: "Login"*/ "../views/Login.vue")
@@ -84,7 +89,10 @@ router.beforeEach(
   (to, from, next) => {
     if(to.matched.some(record => record.meta.requireAuth)){ //if the user is one of the record
       if(!store.user){ //if user not in db
-        next({name: 'Login'})
+        next({
+          name: 'Login',
+          query : {redirect : to.fullPath}
+        })
       }else{
         next()
       }

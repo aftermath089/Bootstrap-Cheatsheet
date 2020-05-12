@@ -22,7 +22,8 @@ export default {
   methods: {
     login() { //authenticate api here
       store.user = this.username;
-      this.$router.push("/user");
+      const redirectPath = this.$router.query.redirect || '/'
+      this.$router.push(redirectPath);
     }
   }
 };
