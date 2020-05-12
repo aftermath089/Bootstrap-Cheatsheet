@@ -1,12 +1,25 @@
 <template>
   <div>
-      <h1>user</h1>
+      <h1>{{user}}</h1>
+      <button class="btn" v-on:click="logOut">logout</button>
   </div>
 </template>
 
 <script>
-export default {
+import store from "@/store.js"
 
+export default {
+    data(){
+        return{
+            user : store.user
+        }
+    },
+    methods:{
+        logOut(){
+            store.user = null;
+            this.$router.push('/')
+        }
+    }
 }
 </script>
 
