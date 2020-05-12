@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <TheNavigation/>
-    <router-view v-bind:key="$route.path"/> <!--trigger change-->
+    <transition name="slide" mode="out-in">
+        <router-view v-bind:key="$route.path"/> <!--trigger change-->
+    </transition>
   </div>
 </template>
 
@@ -36,5 +38,16 @@
 
 #nav a.router-link-exact-active {
   color: red;
+}
+
+.slide-enter-active,
+.slide-leave-active{
+  transition: opacity 0.1s, transform 0.3s;
+}
+
+.slide-enter,
+.slide-leave-to{
+  opacity: 0;
+  transform: translateX(-30%);
 }
 </style>
