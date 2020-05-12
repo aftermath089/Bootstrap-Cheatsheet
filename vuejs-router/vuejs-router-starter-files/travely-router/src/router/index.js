@@ -24,6 +24,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "DestinationExperienceDetails"*/ "../views/ExperienceDetails.vue")
       }
     ]
+  },
+  {// make sure this is always at the end of router array
+    path : "*",
+    name : "NotFound",
+    component:  () => import(/* webpackChunkName: "NotFound"*/ "../components/NotFound.vue")
   }
 
 ];
