@@ -15,9 +15,12 @@
     
     <section class="experiences">
       <h2>Top experiences in {{computedDestination.name}}</h2>
-      <div class="cards">
+      <div class="cards" id="experience">
           <div class="card" v-for="experience in computedDestination.experiences" v-bind:key="experience.slug">
-            <router-link v-bind:to="{name: 'ExperienceDetails', params:{destinationExperienceSlug: experience.slug }}">
+            <router-link v-bind:to="{
+                name: 'ExperienceDetails', 
+                params:{destinationExperienceSlug: experience.slug }, 
+                hash:'#experience'}">
               <img v-bind:src="require(`@/assets/${experience.image}`)" alt="experience.name"/>
               <span class="card_text">
                   {{experience.name}}
@@ -92,5 +95,9 @@ p {
   font-size: 25px;
   font-weight: bold;
   text-decoration: none;
+}
+
+.experiences{
+    padding: 40px 0;
 }
 </style>
