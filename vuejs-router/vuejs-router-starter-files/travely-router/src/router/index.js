@@ -37,6 +37,17 @@ const routes = [
     }
 
   },
+  {
+    path : "/user",
+    name : "User",
+    component : () => import(/* webpackChunkName: "User"*/ "../views/User.vue"),
+    meta: {requireAuth:true}
+  },
+  {
+    path : "/login",
+    name : "Login",
+    component : () => import(/* webpackChunkName: "Login"*/ "../views/Login.vue")
+  },
   {// make sure this is always at the end of router array
     path : "/404",
     alias: "*",
@@ -68,5 +79,19 @@ const router = new VueRouter({
     }
   }
 });
+
+router.beforeEach(
+  (to, from, next) => {
+    if(to.matched.some(record => record.meta.requireAuth)){ //if the user is one of the record
+      if(!store.user){ //if user not in db
+        next({name: 'Login'})
+      }else{
+        next()
+      }
+    }else{
+      next()
+    }
+  }
+)
 
 export default router;
