@@ -15,8 +15,17 @@ const routes = [
     path: "/details/:destinationSlug", //bring the slug in params as url
     name: "DestinationDetails",
     props: true,
-    component: () => import(/* webpackChunkName: "DestinationDetails"*/ "../views/DestinationDetails.vue")
+    component: () => import(/* webpackChunkName: "DestinationDetails"*/ "../views/DestinationDetails.vue"),
+    children:[
+      {
+        path: ":destinationExperienceSlug",
+        name: "ExperienceDetails",
+        props: true,
+        component: () => import(/* webpackChunkName: "DestinationDetails"*/ "../views/ExperienceDetails.vue")
+      }
+    ]
   }
+
 ];
 
 const router = new VueRouter({
