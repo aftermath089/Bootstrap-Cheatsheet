@@ -3,11 +3,11 @@
     <h1>All Destination</h1>
     <div class="destination">
       <div v-for="destination in destinations" v-bind:key="destination.name">
-        <router-link v-bind:to="destination.slug">
+        <router-link v-bind:to="{name: 'DestinationDetails', params:{id:destination.id}}">
           <h2>{{destination.name}}</h2>
         </router-link>
         <figure>
-          <router-link v-bind:to="destination.name">
+          <router-link v-bind:to="{name: 'DestinationDetails', params:{id:destination.id}}">
             <img
               v-bind:src="require(`@/assets/${destination.image}`)"
               v-bind:alt="destination.name"
@@ -25,7 +25,9 @@ import store from "@/store.js";
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    
+  },
   data() {
     return {
       destinations: store.destinations
