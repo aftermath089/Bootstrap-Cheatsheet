@@ -7,7 +7,8 @@ vue.use(vuex)
 
 export default new vuex.Store({
     state: { //equivalent with data
-        products : []
+        products : [],
+        cart : []
     },
 
     getters: { //equivalent to computed properties
@@ -24,12 +25,43 @@ export default new vuex.Store({
                     resolve()      
                 })        
             })
+        },
+
+        addProductToCart(context, product){
+            if(product.inventory > 0){
+                const cartItem = context.state.cart.find(item => item.id === product.id) //check if the item is in cart
+
+                if(!cartItem){ //if item not in cart
+                    context.commit('pushToCart', product.id)
+                }else{ //if item is in cart
+                    context.commit('incrementItemQuantity', cartItem)
+                }
+
+                context.commit('decrementProductInventory', product) //also reducing the product inventory
+            }
         }
     },
 
     mutations: { //setting and update the state
         setProducts(state, products){
             state.products = products
+        },
+        
+        pushToCart(state, productId){
+            const itemToCart = {
+                id : productId,
+                quantity : 1
+            }
+
+            state.cart.push(itemToCart)
+        },
+
+        incrementItemQuantity(state, cartItem){
+            cartItem.quantity++
+        },
+
+        decrementProductInventory(state, product){
+            product.inventory--
         }
     }
 
