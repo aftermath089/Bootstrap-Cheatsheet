@@ -4,9 +4,9 @@ import vue from 'vue'
 //use middleware
 vue.use(vuex)
 
-new vuex.Store({
+export default new vuex.Store({
     state: { //equivalent with data
-
+        products : []
     },
 
     getters: { //equivalent to computed properties
@@ -18,7 +18,9 @@ new vuex.Store({
     },
 
     mutations: { //setting and update the state
-
+        setProducts(state, products){
+            state.products = products
+        }
     }
 
 })

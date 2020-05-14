@@ -9,17 +9,18 @@
 
 <script>
 import shop from '@/api/shop.js'
+import store from '@/store'
 
 export default {
-    data(){
-        return{
-            products : []
+    computed: {
+        products(){
+            return store.state.products
         }
     },
-
+    
     created(){
-        shop.getProducts(products => {
-            this.products = products
+        shop.getProducts(products => { //get the products from shop and  update with store.commit (note:shop is api and store is vuex storage)
+            store.commit('setProducts', products)
         })    
     }
 }
