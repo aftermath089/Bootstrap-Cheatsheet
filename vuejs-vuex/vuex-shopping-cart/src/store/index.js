@@ -8,7 +8,8 @@ vue.use(vuex)
 export default new vuex.Store({
     state: { //equivalent with data
         products : [],
-        cart : []
+        cart : [],
+        checkoutStatus : null
     },
 
     getters: { //equivalent to computed properties
@@ -58,6 +59,19 @@ export default new vuex.Store({
 
                 context.commit('decrementProductInventory', product) //also reducing the product inventory
             }
+        },
+
+        checkout(context){
+            shop.buyProducts(
+                context.state.cart, 
+                ()=>{ //success
+                    context.commit('emptyCart')
+                    context.commit('setCheckoutStatus', 'success')
+                },
+                ()=>{//failure
+                    context.commit('setCheckoutStatus', 'failed')
+                }
+            )
         }
     },
 
@@ -81,6 +95,14 @@ export default new vuex.Store({
 
         decrementProductInventory(state, product){
             product.inventory--
+        },
+
+        setCheckoutStatus(state, status){
+            state.checkoutStatus = status
+        },
+
+        emptyCart(state){
+            state.cart = []
         }
     }
 

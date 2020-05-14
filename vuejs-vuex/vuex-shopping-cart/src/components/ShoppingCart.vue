@@ -8,6 +8,8 @@
       >{{cartItem.title}} - {{cartItem.price}} - {{cartItem.quantity}}</li>
     </ul>
     <div>Total Price : {{totalPrice}}</div>
+    <button v-on:click="checkoutItems">Checkout</button>
+    <div>{{this.$store.state.checkoutStatus}}</div>
   </div>
 </template>
 
@@ -20,6 +22,11 @@ export default {
     totalPrice(){
       return this.$store.getters.cartTotal;
     }
+  },
+  methods:{
+      checkoutItems(){
+          this.$store.dispatch('checkout')
+      }
   }
 };
 </script>
