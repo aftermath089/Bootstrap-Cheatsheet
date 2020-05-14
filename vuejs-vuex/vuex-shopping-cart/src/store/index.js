@@ -1,5 +1,6 @@
 import vuex from 'vuex'
 import vue from 'vue'
+import shop from '@/api/shop.js'
 
 //use middleware
 vue.use(vuex)
@@ -16,7 +17,11 @@ export default new vuex.Store({
     },
 
     actions: { //equivalent to methods properties
-
+        fetchProducts(context){
+            shop.getProducts(products => { //get the products from shop and  update with store.commit (note:shop is api and store is vuex storage)
+                context.commit('setProducts', products)
+            })
+        }
     },
 
     mutations: { //setting and update the state
