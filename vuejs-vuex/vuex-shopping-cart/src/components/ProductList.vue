@@ -9,9 +9,6 @@
 </template>
 
 <script>
-
-import store from '@/store'
-
 export default {
     data(){
         return{
@@ -20,13 +17,13 @@ export default {
     },
     computed: {
         products(){
-            return store.getters.availableProducts
+            return this.$store.getters.availableProducts
         }
     },
     
     created(){
         this.loading = true
-        store.dispatch('fetchProducts') //this to call the function
+        this.$store.dispatch('fetchProducts') //this to call the function
             .then(() => this.loading = false) //set to false after promise resolved
     }
 }
