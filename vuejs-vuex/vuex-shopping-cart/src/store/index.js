@@ -14,7 +14,18 @@ export default new vuex.Store({
     getters: { //equivalent to computed properties
         availableProducts(state){
             return state.products.filter(product => product.inventory > 0 )
-        }
+        },
+
+        itemsInCart(state){
+            return state.cart.map(cartItem => {
+                const product = state.products.find(product => product.id === cartItem.id)
+                return {
+                  title: product.title,
+                  price: product.price,
+                  quantity: cartItem.quantity
+                }
+              })
+        },
     },
 
     actions: { //equivalent to methods properties

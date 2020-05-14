@@ -3,8 +3,12 @@
       <h1>Product List</h1>
       <p v-if="loading">Loading</p>
       <ul v-else>
-          <li v-for="product in products" v-bind:key="product.id">{{product.title}} | {{product.price}}
+          <li v-for="product in products" v-bind:key="product.id">
+             <div>{{product.title}}</div>
+              <div>$ {{product.price}}</div>
+              <div>Qty: {{product.inventory}}</div>
               <button v-on:click='addProductToCart(product)'>add to cart</button>
+              <br>
           </li>
       </ul>
   </div>
