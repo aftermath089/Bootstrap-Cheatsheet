@@ -18,8 +18,11 @@ export default new vuex.Store({
 
     actions: { //equivalent to methods properties
         fetchProducts(context){
-            shop.getProducts(products => { //get the products from shop and  update with store.commit (note:shop is api and store is vuex storage)
-                context.commit('setProducts', products)
+            return new Promise((resolve, reject) => {
+                shop.getProducts(products => { //get the products from shop and  update with store.commit (note:shop is api and store is vuex storage)
+                    context.commit('setProducts', products)
+                    resolve()      
+                })        
             })
         }
     },
