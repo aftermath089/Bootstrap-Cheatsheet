@@ -7,6 +7,7 @@
         v-bind:key="cartItem.title"
       >{{cartItem.title}} - {{cartItem.price}} - {{cartItem.quantity}}</li>
     </ul>
+    <div>Total Price : {{totalPrice}}</div>
   </div>
 </template>
 
@@ -15,6 +16,9 @@ export default {
   computed: {
     cartItems() {
       return this.$store.getters.itemsInCart;
+    },
+    totalPrice(){
+      return this.$store.getters.cartTotal;
     }
   }
 };
