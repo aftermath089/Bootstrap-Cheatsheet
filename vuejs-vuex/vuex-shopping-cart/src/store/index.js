@@ -10,7 +10,9 @@ export default new vuex.Store({
     },
 
     getters: { //equivalent to computed properties
-
+        availableProducts(state){
+            return state.products.filter(product => product.inventory > 0 )
+        }
     },
 
     actions: { //equivalent to methods properties
