@@ -34,6 +34,12 @@ export default new vuex.Store({
                 total = total + item.price*item.quantity
             })
             return total
+        },
+
+        productIsInStock(product){
+            return (product) =>{
+                return  product.inventory > 0 
+            }
         }
     },
 

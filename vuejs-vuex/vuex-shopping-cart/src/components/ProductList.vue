@@ -7,7 +7,7 @@
              <div>{{product.title}}</div>
               <div>$ {{product.price}}</div>
               <div>Qty: {{product.inventory}}</div>
-              <button v-on:click='addProductToCart(product)'>add to cart</button>
+              <button v-on:click='addProductToCart(product)' v-bind:disabled="!productIsInStock(product)">add to cart</button>
               <br>
           </li>
       </ul>
@@ -23,7 +23,10 @@ export default {
     },
     computed: {
         products(){
-            return this.$store.getters.availableProducts
+            return this.$store.state.products
+        },
+        productIsInStock(){
+            return this.$store.getters.productIsInStock
         }
     },
     methods: {
