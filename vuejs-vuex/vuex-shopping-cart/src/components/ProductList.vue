@@ -18,6 +18,9 @@ export default {
         }
     },
     
+    created(){
+        store.dispatch('fetchProducts') //this to call the function
+    }
 }
 </script>
 
