@@ -9,7 +9,8 @@ new Vue({
         name: null,
         age: null,
         food: null,
-        newsletter: null
+        newsletter: null,
+        githubUsername: null
       }
     }
   },
@@ -37,7 +38,16 @@ new Vue({
                 required: validators.requiredIf(function(){ //make sure its requiredIf and not required
                     return !!this.form.newsletter //return true if checkbox i
                 })
-            }
+            },
+
+            githubUsername: {
+                exists (value) {
+                  if (!validators.helpers.req(value)) {
+                    return true
+                  }
+                  return axios.get(`//api.github.com/users/${value}`)
+                }
+              }
         }
     },
 

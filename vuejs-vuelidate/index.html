@@ -73,12 +73,23 @@
                 <p v-if="!$v.form.email.required && $v.form.email.$error" class="error-message">Email is required so we can send you the newsletter</p>
               </div>
 
+              <div class="form-group">
+                  <label for="github">Github username:</label><!--use v-model.lazy so it doesnt call the api on every keystroke-->
+                  <input v-model.lazy="form.githubUsername" 
+                    v-on:blur="$v.form.githubUsername.$touch()"
+                    v-bind:class="{error: $v.form.githubUsername.$error, valid: !$v.form.githubUsername.$invalid}"
+                    id="github-username"
+                  >
+                  <span v-show="$v.form.githubUsername.$pending">Loading</span>
+                  <p v-if="!$v.form.githubUsername.exists && $v.form.githubUsername.$error" class="error-message">GithubProfile required </p>
+              </div>
             <div>
                 <button>Submit</button>
             </div>
         </form>
     </div>
     <script src="app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 </body>
 
 </html>
