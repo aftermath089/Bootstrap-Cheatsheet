@@ -5,25 +5,31 @@
     <meta charset="UTF-8">
     <title>Form Validation</title>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    
+    <script src="libs/vuelidate.min.js"></script> 
+    <script src="libs/validators.min.js"></script> 
+    
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="app">
         <h1>Form Validation</h1>
-        <form autocomplete="off">
+        <form autocomplete="off" v-on:submit.prevent="submitForm">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input id="name">
+                <input id="name" v-model="form.name">
+                <p v-if="$v.form.name.$invalid" class="error-message">The name field is required</p>
             </div>
 
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input id="age">
+                <input id="age" v-model="form.age">
+                <p v-if="$v.form.age.$invalid" class="error-message">The age field is invalid</p>
             </div>
 
             <div>
-                <button>Submit</button>
+                <button v-bind:disabled="$v.form.$invalid">Submit</button>
             </div>
         </form>
     </div>
