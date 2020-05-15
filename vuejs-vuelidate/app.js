@@ -28,6 +28,10 @@ new Vue({
 
   methods: {
     submitForm(){
+        this.$v.form.$touch() //used to touch the field so its become active, and trigger reactive effect to invalid and error properties
+        //this.$v.form.name.$touch()
+        //this.$v.form.age.$touch()
+
         if (!this.$v.form.$invalid) { //emit an invalid if one of the validators isnt satisfied
             console.log('📝 Form Submitted', this.form)
           } else {
