@@ -18,7 +18,9 @@
         <form autocomplete="off" v-on:submit.prevent="submitForm">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input id="name" v-model="$v.form.name.$model">
+                <input id="name" v-model="$v.form.name.$model"
+                    v-bind:class="{error: $v.form.name.$error , valid : !$v.form.name.$invalid}"
+                >
                 <!--
                     there are several variable such as
                     invalid = not correct
@@ -30,7 +32,9 @@
 
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input id="age" v-model="$v.form.age.$model">
+                <input id="age" v-model="$v.form.age.$model"
+                    v-bind:class="{error: $v.form.age.$error , valid : !$v.form.age.$invalid}"
+                >
                 <div v-if="$v.form.age.$error">
                     <p v-if="!$v.form.age.required" class="error-message">The age field is required</p>
                     <p v-else-if="!$v.form.age.integer" class="error-message">The age field must be an integers number</p>
