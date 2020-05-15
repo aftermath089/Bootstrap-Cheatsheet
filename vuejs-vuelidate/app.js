@@ -7,7 +7,8 @@ new Vue({
     return {
       form: {
         name: null,
-        age: null
+        age: null,
+        food: null
       }
     }
   },
@@ -22,6 +23,12 @@ new Vue({
                 required: validators.required, //form.age is required
                 integer: validators.integer, //shall be integer
                 between: validators.between(12, 120) //between 12 and 120
+            },
+
+            food: {
+                required: validators.required, //form.age is required
+                //return true if its pizza, or burger, or its not even written yet
+                pizzaOrBurger : value => value === 'pizza' || value === 'burger' || !validators.helpers.req(value)
             }
         }
     },
