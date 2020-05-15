@@ -8,7 +8,8 @@ new Vue({
       form: {
         name: null,
         age: null,
-        food: null
+        food: null,
+        newsletter: null
       }
     }
   },
@@ -29,6 +30,13 @@ new Vue({
                 required: validators.required, //form.age is required
                 //return true if its pizza, or burger, or its not even written yet
                 pizzaOrBurger : value => value === 'pizza' || value === 'burger' || !validators.helpers.req(value)
+            },
+
+            email: {
+                email: validators.email,
+                required: validators.requiredIf(function(){ //make sure its requiredIf and not required
+                    return !!this.form.newsletter //return true if checkbox i
+                })
             }
         }
     },
