@@ -18,7 +18,8 @@
         <form autocomplete="off" v-on:submit.prevent="submitForm">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input id="name" v-model="$v.form.name.$model"
+                <input id="name" v-model="form.name"
+                    v-on:blur="$v.form.name.$touch()"
                     v-bind:class="{error: $v.form.name.$error , valid : !$v.form.name.$invalid}"
                 >
                 <!--
@@ -32,7 +33,8 @@
 
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input id="age" v-model="$v.form.age.$model"
+                <input id="age" v-model="form.age"
+                    v-on:blur="$v.form.age.$touch()"
                     v-bind:class="{error: $v.form.age.$error , valid : !$v.form.age.$invalid}"
                 >
                 <div v-if="$v.form.age.$error">
