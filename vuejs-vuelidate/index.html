@@ -18,17 +18,24 @@
         <form autocomplete="off" v-on:submit.prevent="submitForm">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input id="name" v-model="form.name">
-                <p v-if="$v.form.name.$invalid" class="error-message">The name field is required</p>
+                <input id="name" v-model="$v.form.name.$model">
+                <!--
+                    there are several variable such as
+                    invalid = not correct
+                    dirty = field isnt dirty
+                    error = invalid and dirty
+                -->
+                <p v-if="$v.form.name.$error" class="error-message">The name field is required</p>
             </div>
 
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input id="age" v-model="form.age">
-                <p v-if="!$v.form.age.required" class="error-message">The age field is required</p>
-                <p v-else-if="!$v.form.age.integer" class="error-message">The age field must be an integers number</p>
-                <p v-else-if="!$v.form.age.between" class="error-message">The age field must be in between 12 and 120</p>
-
+                <input id="age" v-model="$v.form.age.$model">
+                <div v-if="$v.form.age.$error">
+                    <p v-if="!$v.form.age.required" class="error-message">The age field is required</p>
+                    <p v-else-if="!$v.form.age.integer" class="error-message">The age field must be an integers number</p>
+                    <p v-else-if="!$v.form.age.between" class="error-message">The age field must be in between 12 and 120</p>
+                </div>
             </div>
 
             <div>
