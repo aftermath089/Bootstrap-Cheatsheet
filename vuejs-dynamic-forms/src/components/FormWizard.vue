@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="wizardInProgress"> 
+    <div v-if="wizardInProgress" v-show="asyncState !== 'pending'"> <!--using v-show so we dont lost the cached progress in keep-alive component-->
       <keep-alive>
       <component 
         ref="currentStep"
@@ -23,6 +23,13 @@
     </div>
 
     <pre><code>{{form}}</code></pre>
+    </div>
+
+    <div class="loading-wrapper" v-if="asyncState === 'pending'">
+      <div class="loader">
+        <img src="/spinner.svg" alt="">
+        <p>Please wait, we're hitting our servers!</p>
+      </div>
     </div>
 
     <div v-else>
@@ -56,6 +63,7 @@ export default {
   },
   data() {
     return {
+      asyncState: null,
       currentStepNumber: 1,
       form: {
         plan: null,
@@ -126,8 +134,10 @@ export default {
     },
 
     submitOrder(){
+      this.asyncState = 'pending'
       postFormToDB(this.form)
         .then(()=>{
+          this.asyncState = 'success'
           console.log('form submitted!', this.form)
           this.currentStepNumber++
         })
