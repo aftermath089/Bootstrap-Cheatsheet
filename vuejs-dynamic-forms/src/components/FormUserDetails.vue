@@ -4,12 +4,13 @@
 
     <h2 class="subtitle">Create an account or log in to order your liquid gold subscription</h2>
 
-    <form class="form" v-on:input="submit">
+    <form class="form" v-on:input="submit" v-if="!loggedIn">
       <div class="form-group">
         <label class="form-label" for="email">Email</label>
         <input
           type="text"
           v-model="$v.form.email.$model"
+          v-on:input="checkIfUserExists"
           placeholder="your@email.com"
           class="form-control"
           id="email"
@@ -18,7 +19,7 @@
         <div v-if="$v.form.email.$error && !$v.form.email.email" class="error">email is invalid</div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" v-if="emailCheckedInDB"> <!--show only when email entered is checked in DB-->
         <label class="form-label" for="password">Password</label>
         <input
           v-model="$v.form.password.$model"
@@ -31,9 +32,16 @@
           v-if="$v.form.password.$error && !$v.form.password.required"
           class="error"
         >password is required</div>
+        <div v-if="$v.form.password.$error && !$v.form.password.correct" class="error">password is invalid - try again</div>
       </div>
 
-      <div class="form-group">
+      <!--if email is in DB let the user login-->
+      <div v-if="emailExistInDB" class="form-group">
+        <button class="btn" v-on:click.prevent="login">Login</button>
+      </div>
+
+      <!--if email isnt in DB let the user register-->
+      <div class="form-group" v-if="emailCheckedInDB && !emailExistInDB">
         <label class="form-label" for="name">Name</label>
         <input
           v-model="$v.form.name.$model"
@@ -45,11 +53,16 @@
         <div v-if="$v.form.name.$error" class="error">name is required</div>
       </div>
     </form>
+    <div v-else class="text-center">
+      Successfully logged in! <a href="#" @click="reset">Not {{form.name}}?</a>
+    </div>
   </div>
 </template>
 
 <script>
 import { required, email } from "vuelidate/lib/validators";
+import { authenticateUser, checkIfUserExistsInDB} from "@/api"
+
 export default {
   data() {
     return {
@@ -57,7 +70,10 @@ export default {
         email: null,
         password: null,
         name: null
-      }
+      },
+      emailCheckedInDB: false,
+      emailExistInDB: false,
+      wrongPassword: false
     };
   },
   validations: {
@@ -67,11 +83,20 @@ export default {
         email
       },
       password: {
-        required
+        required,
+        correct(){
+          return !this.wrongPassword
+        }
       },
       name: {
         required
       }
+    }
+  },
+
+  computed:{
+    loggedIn(){
+      return this.emailExistInDB && this.form.name //user is logged in if we have the email in DB and managed to get their name
     }
   },
 
@@ -88,7 +113,49 @@ export default {
       if(!this.$v.form.$invalid){
         
       }
-    }
+    },
+
+   checkIfUserExists () {
+        if (!this.$v.form.email.$invalid) {
+          return checkIfUserExistsInDB(this.form.email)
+            .then(() => {
+              // USER EXISTS
+              this.emailExistInDB = true
+              this.emailCheckedInDB = true
+            })
+            .catch(() => {
+              // USER DOESN'T EXIST
+              this.emailExistInDB = false
+              this.emailCheckedInDB = true
+            })
+        }
+      },
+    
+     login () {
+        this.wrongPassword = false
+        if (!this.$v.form.password.$invalid) {
+          return authenticateUser(this.form.email, this.form.password)
+            .then(user => {
+              // LOGGED IN
+              this.form.name = user.name
+              this.submit()
+            })
+            .catch(() => {
+              // WRONG PASSWORD?
+              this.wrongPassword = true
+            })
+        }
+      },
+
+       reset () {
+        this.form.email = null
+        this.form.password = null
+        this.form.name = null
+        this.emailCheckedInDB = false
+        this.wrongPassword = false
+        this.existingUser = false
+        this.$v.$reset()
+      },
   }
 };
 </script>
