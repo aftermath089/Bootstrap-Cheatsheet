@@ -4,7 +4,7 @@
 
     <h2 class="subtitle">Create an account or log in to order your liquid gold subscription</h2>
 
-    <form class="form">
+    <form class="form" v-on:input="submit">
       <div class="form-group">
         <label class="form-label" for="email">Email</label>
         <input
@@ -71,6 +71,18 @@ export default {
       },
       name: {
         required
+      }
+    }
+  },
+
+  methods:{
+    submit(){
+      if(!this.$v.form.$invalid){
+        this.$emit('update', {
+          email: this.form.email,
+          password: this.form.password,
+          name: this.form.name
+        })
       }
     }
   }

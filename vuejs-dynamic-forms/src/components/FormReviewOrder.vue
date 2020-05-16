@@ -29,7 +29,7 @@
 
       <p class="description">Treat yourself by leveling up your monthly box</p>
 
-      <div class="options">
+      <div class="options" v-on:change="submit">
         <div class="option">
           <input v-model="form.chocolate" type="checkbox" value="chocolate" id="chocolate" />
           <label for="chocolate">4 pcs. Single Origin Chocolate (+$4/month)</label>
@@ -69,6 +69,14 @@ export default {
   computed: {
     totalPrice() {
       return 0;
+    }
+  },
+  methods:{
+    submit(){
+      this.$emit('update', {
+        chocolate: this.form.chocolate,
+        otherTreat: this.form.otherTreat
+      })
     }
   }
 };

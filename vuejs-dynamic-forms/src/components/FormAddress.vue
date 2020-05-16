@@ -4,7 +4,7 @@
 
     <h2 class="subtitle">Where should we send your freshly roasted coffee beans?</h2>
 
-    <form class="form">
+    <form class="form" v-on:input="submit">
       <div class="form-group">
         <label class="form-label" for="delivery_name">Name</label>
         <input
@@ -50,6 +50,16 @@ export default {
       },
       recipient: {
         required
+      }
+    }
+  },
+  methods:{
+    submit(){
+      if(!this.$v.form.$invalid){
+        this.$emit('update', {
+          address: this.form.address,
+          recipient: this.form.recipient
+        })
       }
     }
   }
