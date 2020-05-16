@@ -68,6 +68,10 @@ export default {
     pickPlan(plan) {
       this.selectedPlan = plan;
 
+      this.submit()
+    },
+
+    submit(){
       this.$emit('update', {
         data: {
           plan: this.selectedPlan
@@ -75,6 +79,7 @@ export default {
         valid: !this.$v.$invalid
       })
     }
+
   }
 };
 </script>

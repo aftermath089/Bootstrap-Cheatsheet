@@ -2,6 +2,7 @@
   <div>
     <keep-alive>
       <component 
+        ref="currentStep"
         v-bind:is="currentStep" 
         v-on:update="processEmitted" 
         v-bind:wizardData="form"
@@ -77,7 +78,10 @@ export default {
     },
     goNext() {
       this.currentStepNumber++;
-      this.allowedGoNext= false
+      this.$nextTick(() => {
+        //this.$refs.currentStep.submit() //make sure every child form have submit method
+        this.allowedGoNext = !this.$refs.currentStep.$v.$invalid
+      })
     },
 
     processEmitted(emittedData){
