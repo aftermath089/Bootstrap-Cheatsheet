@@ -70,6 +70,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+
+  activated(){ // trigger when keep-alive component is activated
+    //previously form recipient isnt reactive for numerous go and back, so this hooks make sure that it is well observed
+    this.form.recipient = this.wizardData.name 
   }
 };
 </script>
