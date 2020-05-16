@@ -10,7 +10,7 @@
         <input
           type="text"
           v-model="$v.form.email.$model"
-          v-on:input="checkIfUserExists"
+          v-on:blur="checkIfUserExists"
           placeholder="your@email.com"
           class="form-control"
           id="email"
@@ -116,17 +116,20 @@ export default {
     },
 
    checkIfUserExists () {
+        this.$emit('updateAsyncState', 'pending')
         if (!this.$v.form.email.$invalid) {
           return checkIfUserExistsInDB(this.form.email)
             .then(() => {
               // USER EXISTS
               this.emailExistInDB = true
               this.emailCheckedInDB = true
+              this.$emit('updateAsyncState', 'success')
             })
             .catch(() => {
               // USER DOESN'T EXIST
               this.emailExistInDB = false
               this.emailCheckedInDB = true
+              this.$emit('updateAsyncState', 'success')
             })
         }
       },
@@ -134,15 +137,18 @@ export default {
      login () {
         this.wrongPassword = false
         if (!this.$v.form.password.$invalid) {
+          this.$emit('updateAsyncState', 'pending')
           return authenticateUser(this.form.email, this.form.password)
             .then(user => {
               // LOGGED IN
               this.form.name = user.name
               this.submit()
+              this.$emit('updateAsyncState', 'success')
             })
             .catch(() => {
               // WRONG PASSWORD?
               this.wrongPassword = true
+              this.$emit('updateAsyncState', 'success')
             })
         }
       },

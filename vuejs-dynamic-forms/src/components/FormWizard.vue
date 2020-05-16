@@ -6,6 +6,7 @@
         ref="currentStep"
         v-bind:is="currentStep" 
         v-on:update="processEmitted" 
+        v-on:updateAsyncState="updateAsyncState"
         v-bind:wizardData="form"
       ></component>
     </keep-alive>
@@ -141,6 +142,10 @@ export default {
           console.log('form submitted!', this.form)
           this.currentStepNumber++
         })
+    },
+     
+    updateAsyncState(state){
+      this.asyncState = state
     }
   }
 };
