@@ -1,9 +1,10 @@
 <template>
   <div>
-    <FormPlanPicker v-if="currentStepNumber === 1" v-on:update="processEmitted"/>
-    <FormUserDetails v-if="currentStepNumber === 2" v-on:update="processEmitted"/>
-    <FormAddress v-if="currentStepNumber === 3"  v-on:update="processEmitted" v-bind:wizardData="form"/>
-    <FormReviewOrder v-if="currentStepNumber === 4"  v-on:update="processEmitted" v-bind:wizardData="form"/>
+    <component 
+      v-bind:is="currentStep" 
+      v-on:update="processEmitted" 
+      v-bind:wizardData="form"
+    ></component>
 
     <div class="progress-bar">
       <div v-bind:style="`width: ${progress}%;`"></div>
@@ -11,7 +12,7 @@
 
     <!-- Actions -->
     <div class="buttons">
-      <button v-on:click="goBack" v-if="currentStepNumber > 1" class="btn-outlined">Back</button>
+      <button v-on:click="goBack" v-if="currentStepNumber > 0" class="btn-outlined">Back</button>
       <button v-on:click="goNext" class="btn" v-bind:disabled="!allowedGoNext">Next</button>
     </div>
 
@@ -34,8 +35,7 @@ export default {
   },
   data() {
     return {
-      currentStepNumber: 1,
-      length: 4,
+      currentStepNumber: 0,
       form: {
         plan: null,
         email: null,
@@ -46,12 +46,26 @@ export default {
         chocolate: false,
         otherTreat: false
       },
-      allowedGoNext: false
+      allowedGoNext: false,
+      steps: [
+        "FormPlanPicker",
+        "FormUserDetails",
+        "FormAddress",
+        "FormReviewOrder"
+      ]
     };
   },
   computed: {
     progress() {
       return (this.currentStepNumber / this.length) * 100;
+    },
+
+    length(){
+      return this.steps.length
+    },
+
+    currentStep(){
+      return this.steps[this.currentStepNumber]
     }
   },
   methods: {
