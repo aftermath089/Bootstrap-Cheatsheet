@@ -12,7 +12,7 @@
     <!-- Actions -->
     <div class="buttons">
       <button v-on:click="goBack" v-if="currentStepNumber > 1" class="btn-outlined">Back</button>
-      <button v-on:click="goNext" class="btn">Next</button>
+      <button v-on:click="goNext" class="btn" v-bind:disabled="!allowedGoNext">Next</button>
     </div>
 
     <pre><code>{{form}}</code></pre>
@@ -45,7 +45,8 @@ export default {
         recipient: null,
         chocolate: false,
         otherTreat: false
-      }
+      },
+      allowedGoNext: false
     };
   },
   computed: {
@@ -59,10 +60,12 @@ export default {
     },
     goNext() {
       this.currentStepNumber++;
+      this.allowedGoNext= false
     },
 
     processEmitted(emittedData){
       Object.assign(this.form, emittedData)
+      this.allowedGoNext=  true
     }
   }
 };
