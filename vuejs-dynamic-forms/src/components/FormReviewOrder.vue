@@ -11,11 +11,11 @@
 
       <div class="plans">
         <div class="plan active-plan">
-          <div class="weight">PLAN WEIGHT</div>
+          <div class="weight">{{wizardData.plan.weight}}</div>
 
           <div class="description">
-            <span class="title">PLAN NAME</span>
-            <span class="description">PLAN DESC</span>
+            <span class="title">{{wizardData.plan.description}}</span>
+            <span class="description">{{wizardData.plan.description}}</span>
           </div>
 
           <div class="price">
@@ -48,8 +48,8 @@
         </div>
 
         <div class="w-1/3">
-          <h3>RECIPIENT</h3>
-          <p class="leading-normal">ADDRESS</p>
+          <h3>{{wizardData.recipient}}</h3>
+          <p class="leading-normal">{{wizardData.address}}</p>
         </div>
       </div>
     </div>
@@ -68,7 +68,17 @@ export default {
   },
   computed: {
     totalPrice() {
-      return 0;
+      let total= this.wizardData.plan.price
+      
+      if(this.form.chocolate){
+        total = total + 4
+      }
+
+      if(this.form.otherTreat){
+        total = total + 2
+      }
+
+      return total;
     }
   },
   methods:{
@@ -77,6 +87,12 @@ export default {
         chocolate: this.form.chocolate,
         otherTreat: this.form.otherTreat
       })
+    }
+  },
+  props:{
+    wizardData: {
+      type: Object,
+      required: true
     }
   }
 };

@@ -2,8 +2,8 @@
   <div>
     <FormPlanPicker v-if="currentStepNumber === 1" v-on:update="processEmitted"/>
     <FormUserDetails v-if="currentStepNumber === 2" v-on:update="processEmitted"/>
-    <FormAddress v-if="currentStepNumber === 3"  v-on:update="processEmitted"/>
-    <FormReviewOrder v-if="currentStepNumber === 4"  v-on:update="processEmitted"/>
+    <FormAddress v-if="currentStepNumber === 3"  v-on:update="processEmitted" v-bind:wizardData="form"/>
+    <FormReviewOrder v-if="currentStepNumber === 4"  v-on:update="processEmitted" v-bind:wizardData="form"/>
 
     <div class="progress-bar">
       <div v-bind:style="`width: ${progress}%;`"></div>

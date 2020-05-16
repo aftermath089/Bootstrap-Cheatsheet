@@ -39,7 +39,7 @@ export default {
     return {
       form: {
         address: null,
-        recipient: null
+        recipient: this.wizardData.name
       }
     };
   },
@@ -61,6 +61,12 @@ export default {
           recipient: this.form.recipient
         })
       }
+    }
+  },
+  props:{
+    wizardData: {
+      type: Object,
+      required: true
     }
   }
 };
