@@ -54,13 +54,15 @@ export default {
     }
   },
   methods:{
+    
     submit(){
-      if(!this.$v.form.$invalid){
-        this.$emit('update', {
+      this.$emit('update', {
+        data: {
           address: this.form.address,
           recipient: this.form.recipient
-        })
-      }
+        },
+        valid: !this.$v.form.$invalid
+      })
     }
   },
   props:{

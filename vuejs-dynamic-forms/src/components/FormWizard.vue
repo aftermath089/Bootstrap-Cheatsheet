@@ -1,10 +1,12 @@
 <template>
   <div>
-    <component 
-      v-bind:is="currentStep" 
-      v-on:update="processEmitted" 
-      v-bind:wizardData="form"
-    ></component>
+    <keep-alive>
+      <component 
+        v-bind:is="currentStep" 
+        v-on:update="processEmitted" 
+        v-bind:wizardData="form"
+      ></component>
+    </keep-alive>
 
     <div class="progress-bar">
       <div v-bind:style="`width: ${progress}%;`"></div>
@@ -71,6 +73,7 @@ export default {
   methods: {
     goBack() {
       this.currentStepNumber--;
+      this.allowedGoNext = true
     },
     goNext() {
       this.currentStepNumber++;
@@ -78,8 +81,8 @@ export default {
     },
 
     processEmitted(emittedData){
-      Object.assign(this.form, emittedData)
-      this.allowedGoNext=  true
+      Object.assign(this.form, emittedData.data)
+      this.allowedGoNext=  emittedData.valid
     }
   }
 };
