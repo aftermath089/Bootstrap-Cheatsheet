@@ -17,5 +17,11 @@ export default class Model {
         return this.$collection.map(entry => Object.assign({}, entry))
     }       
     update() { }    //update a specific value
-    find() { }      // find a specific value
+
+    find(value) {       // find a specific value
+        const primaryKey = 'id'
+        const entry =  this.$collection.find(entry => entry[primaryKey] === value)
+        
+        return entry ? Object.assign({}, entry) : null //make sure to always return the copy so its ucnchageable
+    }
   }
