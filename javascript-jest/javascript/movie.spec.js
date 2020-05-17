@@ -12,7 +12,7 @@ describe('Favorite Movies', () => {
     }]
   })
 
-  test('can add a movie', () => {
+  test.only('can add a movie', () => {
     // myMovies = [{
     //     title: 'Age of Ultron',
     //     rate: null
@@ -27,7 +27,7 @@ describe('Favorite Movies', () => {
     //     title: 'Age of Ultron',
     //     rate: null
     // }]
-    
+
     movies.rate(myMovies[0], 5)
     expect(myMovies).toMatchSnapshot()
   })
