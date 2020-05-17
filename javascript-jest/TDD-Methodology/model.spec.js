@@ -64,8 +64,38 @@ describe('find', () => {
         expect(model.find(1)).toEqual(null)
     })
 
-    test('return name of heroes', () => {
+    test('return name of heroes', () => {   
         const model = new Model(heroes)
         expect(model.find(1)).toEqual(heroes[0])
     })
 })
+
+//test update function: 3 common case -> update by id,  update and extend by id, return false if entry not found
+describe('update', () => {
+    const heroesAndVillains = [{ id: 1, name: 'Batman' }]
+    let model
+  
+    beforeEach(() => {
+      const dataset = JSON.parse(JSON.stringify(heroesAndVillains)) //this disbale you to accdentaly change heroesAndVillains
+      model = new Model(dataset)
+    })
+  
+    test('an entry by id', () => {
+      model.update(1, { name: 'Joker' })
+      expect(model.find(1).name).toBe('Joker')
+    })
+  
+    test('extend an entry by id', () => {
+      model.update(1, { cape: true })
+      expect(model.find(1)).toEqual(
+        expect.objectContaining({
+          name: 'Batman',
+          cape: true
+        })
+      )
+    })
+  
+    test('return  false if no entry matches', () => {
+      expect(model.update(2, {})).toBe(false)
+    })
+  })
