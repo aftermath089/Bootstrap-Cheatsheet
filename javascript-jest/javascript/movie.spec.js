@@ -12,7 +12,7 @@ describe('Favorite Movies', () => {
     }]
   })
 
-  test.only('can add a movie', () => {
+  test.skip('can add a movie', () => {
     // myMovies = [{
     //     title: 'Age of Ultron',
     //     rate: null
