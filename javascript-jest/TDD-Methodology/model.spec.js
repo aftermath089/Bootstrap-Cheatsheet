@@ -34,3 +34,24 @@ describe('record', () => {
         spy.mockRestore()
     })
 })
+
+//test all function: 2 common case -> there is data to return or no data to return
+describe('all', () => {
+    test('retrieve all data if there is data', () => {
+        const model = new Model([{ name: 'Batman'}, { name: 'Joker' }])
+        expect(model.all().length).toBe(2)
+    })
+
+    test('retrieve all data if there is no data', () => {
+        const model = new Model()
+        expect(model.all()).toEqual([])
+    })
+
+    test('make sure data is unchageable', () => {
+        const model = new Model([{ name: 'Batman' }])
+        const data = model.all()
+        data[0].name = 'Joker'
+    
+        expect(model.$collection[0].name).toBe('Batman')
+    })
+})
