@@ -1,10 +1,17 @@
 export default class Model {
 
-    constructor() {
+    constructor(data = []) {
       this.$collection = []
+
+      if(data.length){
+          this.record(data)
+      }
     }
   
-    record() { }    //takes value and record it
+    record(data) {     //takes value and record it
+        this.$collection.push(...data)
+    }
+
     all() { }       // get all item in collection
     update() { }    //update a specific value
     find() { }      // find a specific value

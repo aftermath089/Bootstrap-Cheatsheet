@@ -16,3 +16,21 @@ test('model structure', () => {
         update: expect.any(Function),
     }))
 })
+
+//test record function
+describe('record', () => {
+    const heroes = [{name: 'Batman'}, { name: 'Black Panther'}]
+    
+    test('add data via record function', () =>{
+        const model = new Model()
+        model.record(heroes)
+        expect(model.$collection).toEqual(heroes)
+    })
+
+    test('add data via constructor', () => {
+        const spy = jest.spyOn(Model.prototype, 'record') //spy to watch if record function in constructor is being called
+        const model = new Model(heroes)
+        expect(spy).toHaveBeenCalled()
+        spy.mockRestore()
+    })
+})
