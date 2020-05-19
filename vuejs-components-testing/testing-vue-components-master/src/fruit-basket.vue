@@ -2,7 +2,7 @@
   <div>
     <h1>Fruit Basket</h1>
     <input type="text" v-model="fruit">
-    <button @click="addToBasket">Add Fruit</button>
+    <button v-on:click="addToBasket">Add Fruit</button>
     <ul class="fruits">
       <li v-for="fruit in basket" :key="fruit">
         {{ fruit }}
