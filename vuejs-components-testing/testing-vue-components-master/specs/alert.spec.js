@@ -15,4 +15,16 @@ describe('testing lifecycle with spy', () => {
         jest.advanceTimersByTime(5000)
         expect(wrapper.vm.counter).toBe(5)
     }) 
+
+    test('destroy instance', () => {
+        jest.useFakeTimers()
+
+        const beforeDestroyedSpy = jest.spyOn(AlertMessage, 'beforeDestroy') //this first and then the wrapper
+        const wrapper = mount(AlertMessage)
+
+        wrapper.vm.counter = wrapper.vm.timer-1 //1 sec before destroyed
+        jest.advanceTimersByTime(1000)
+
+        expect(beforeDestroyedSpy).toHaveBeenCalled()
+    })
 })
