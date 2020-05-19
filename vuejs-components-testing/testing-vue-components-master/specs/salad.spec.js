@@ -8,9 +8,9 @@ import saladStore from '@/store/salad-store'
 //use vuex middleware
 Vue.use(Vuex)
 
-const store = new Vuex.Store(saladStore)
 
 test('store is loaded', () => {
+    const store = new Vuex.Store(saladStore)
     const wrapper = mount(SaladBowlComponent, {
         store
     })
@@ -21,3 +21,12 @@ test('store is loaded', () => {
 
 })
 
+test('store is working properly', () => {
+    const store = new Vuex.Store(saladStore)
+    const wrapper = mount(SaladBowlComponent, {
+        store
+    })
+
+    wrapper.vm.addIngredient('tomato')
+    expect(wrapper.vm.salad).toEqual(['tomato'])
+})
