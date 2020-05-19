@@ -20,3 +20,4 @@ test('store is loaded', () => {
     expect(wrapper.vm.salad).toEqual(['cucumber'])
 
 })
+
