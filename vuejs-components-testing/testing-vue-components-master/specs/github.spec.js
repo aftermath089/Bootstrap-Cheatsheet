@@ -3,7 +3,10 @@ import { mount } from '@vue/test-utils'
 
 describe('methods', () => {
     test('composeUrl', () => {
-        const {composeUrl} = GithubCard.methods
-        expect(composeUrl(123)).toBe('https://api.github.com/users/123')
+        const wrapper = mount(GithubCard)
+        expect(wrapper.vm.composeUrl(123)).toBe('https://api.github.com/users/123')
     })
+
+  
+    
 })
