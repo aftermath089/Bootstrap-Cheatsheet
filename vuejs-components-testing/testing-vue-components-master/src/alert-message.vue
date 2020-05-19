@@ -11,7 +11,7 @@ export default {
     return {
       interval: undefined,
       counter: 0,
-      timer: 5
+      timer: 5 //disappear after 5 second
     };
   },
 
@@ -21,10 +21,10 @@ export default {
     }
   },
 
-  mounted() {
+  mounted() { //run when mounted
     this.interval = setInterval(() => {
-      this.counter++;
-      if (this.counter == this.timer) this.$destroy();
+      this.counter++; //add counter every second
+      if (this.counter == this.timer) this.$destroy(); //destroy lifecycle called
     }, 1000);
   },
 
