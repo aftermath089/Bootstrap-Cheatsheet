@@ -6,5 +6,13 @@ describe('testing lifecycle with spy', () => {
         const wrapper = mount(AlertMessage)
         expect(wrapper.vm.interval).not.toBe(undefined)
     })
-    
+  
+    test('check counter works', () => {
+        jest.useFakeTimers()
+        const wrapper = mount(AlertMessage)
+        
+        expect(wrapper.vm.counter).toBe(0)
+        jest.advanceTimersByTime(5000)
+        expect(wrapper.vm.counter).toBe(5)
+    }) 
 })
