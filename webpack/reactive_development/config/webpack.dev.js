@@ -21,7 +21,18 @@ module.exports = {
         use: [
           { loader: 'style-loader' },{ loader: 'css-loader' },
         ]
-			},
+      }, 
+      {
+        test: /\.(png|jpg)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name]-[hash:8].[ext]"
+            }
+          }
+        ]
+      },
 			{
         test: /\.html$/,
         use: [
